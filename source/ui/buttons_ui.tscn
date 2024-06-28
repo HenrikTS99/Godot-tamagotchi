@@ -1,0 +1,110 @@
+[gd_scene load_steps=9 format=3 uid="uid://xf3patarp24k"]
+
+[ext_resource type="Script" path="res://source/ui/ButtonsUI.gd" id="1_cyjms"]
+[ext_resource type="Texture2D" uid="uid://b4ioxkxhxr8tj" path="res://assets/img/spritesheetbuttons.png" id="2_0da43"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_setar"]
+resource_local_to_scene = true
+atlas = ExtResource("2_0da43")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ge7rg"]
+atlas = ExtResource("2_0da43")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5sre"]
+atlas = ExtResource("2_0da43")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1g4iy"]
+atlas = ExtResource("2_0da43")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6x0gd"]
+atlas = ExtResource("2_0da43")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_da3yl"]
+atlas = ExtResource("2_0da43")
+region = Rect2(160, 0, 32, 32)
+
+[node name="ButtonsUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cyjms")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_0da43")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_top = -102.0
+offset_right = -56.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="LoveButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = SubResource("AtlasTexture_setar")
+stretch_mode = 0
+
+[node name="FeedButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_ge7rg")
+stretch_mode = 0
+
+[node name="CleanButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = SubResource("AtlasTexture_e5sre")
+stretch_mode = 0
+
+[node name="FunButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = SubResource("AtlasTexture_1g4iy")
+stretch_mode = 0
+
+[node name="SocialButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = SubResource("AtlasTexture_6x0gd")
+stretch_mode = 0
+
+[node name="SleepButton" type="TextureButton" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_da3yl")
+stretch_mode = 0
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/LoveButton" to="." method="_on_love_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/FeedButton" to="." method="_on_feed_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/CleanButton" to="." method="_on_clean_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/FunButton" to="." method="_on_fun_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/SocialButton" to="." method="_on_social_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/SleepButton" to="." method="_on_sleep_button_pressed"]

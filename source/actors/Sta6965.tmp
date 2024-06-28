@@ -1,8 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://dqlrf8c1udujk"]
+[gd_scene load_steps=3 format=3 uid="uid://dqlrf8c1udujk"]
 
 [ext_resource type="Script" path="res://UpdateBars.gd" id="1_e4vm8"]
 
-[node name="Control" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b5pjt"]
+bg_color = Color(0.409907, 0.672257, 0.453668, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="StatsUI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,8 +34,11 @@ layout_mode = 2
 text = "Happiness"
 
 [node name="HappinessBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_b5pjt")
 step = 1.0
 value = 30.0
 
@@ -40,6 +50,8 @@ layout_mode = 2
 text = "Hunger"
 
 [node name="HungerBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 step = 1.0
 
@@ -51,6 +63,8 @@ layout_mode = 2
 text = "Hygiene"
 
 [node name="HygieneBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 step = 1.0
 
@@ -62,5 +76,7 @@ layout_mode = 2
 text = "Fun"
 
 [node name="FunBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer4"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 step = 1.0
