@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqlrf8c1udujk"]
+
+[ext_resource type="Script" path="res://UpdateBars.gd" id="1_e4vm8"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e4vm8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Happiness" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Happiness"
+
+[node name="HappinessBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+step = 1.0
+value = 30.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Hunger" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Hunger"
+
+[node name="HungerBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+step = 1.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Hygiene" type="Label" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Hygiene"
+
+[node name="HygieneBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+step = 1.0
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Fun" type="Label" parent="VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Fun"
+
+[node name="FunBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+step = 1.0

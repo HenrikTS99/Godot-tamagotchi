@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://r1srkhptyee1"]
+
+[ext_resource type="Script" path="res://source/actors/pet.gd" id="1_mp1so"]
+[ext_resource type="Texture2D" uid="uid://26ie5j7su3o7" path="res://assets/img/tamagochi.webp" id="2_w6etj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tkmqf"]
+size = Vector2(95, 100)
+
+[node name="Pet" type="CharacterBody2D" groups=["Pet"]]
+script = ExtResource("1_mp1so")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.999969, -2)
+scale = Vector2(0.410937, 0.523438)
+texture = ExtResource("2_w6etj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 12)
+shape = SubResource("RectangleShape2D_tkmqf")
