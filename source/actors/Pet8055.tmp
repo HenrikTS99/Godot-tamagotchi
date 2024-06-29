@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://r1srkhptyee1"]
+
+[ext_resource type="Script" path="res://source/actors/pet.gd" id="1_mp1so"]
+[ext_resource type="Texture2D" uid="uid://bhfjprgp4pnof" path="res://assets/img/capybara.png" id="2_lwjfl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tkmqf"]
+size = Vector2(94, 96)
+
+[node name="Pet" type="CharacterBody2D" groups=["Pet"]]
+script = ExtResource("1_mp1so")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.999969, -2)
+scale = Vector2(2, 2)
+texture = ExtResource("2_lwjfl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -2)
+shape = SubResource("RectangleShape2D_tkmqf")

@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw0gstw6s8kn2"]
+
+[ext_resource type="Script" path="res://source/ui/TextBox.gd" id="1_c3sbk"]
+[ext_resource type="Texture2D" uid="uid://bhfjprgp4pnof" path="res://assets/img/capybara.png" id="2_vwhv4"]
+
+[node name="TextBox" type="MarginContainer"]
+offset_right = 56.0
+offset_bottom = 48.0
+script = ExtResource("1_c3sbk")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_vwhv4")
+region_rect = Rect2(17, 10, 8, 3)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+vertical_alignment = 1
+
+[node name="LetterDisplayTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="LetterDisplayTimer" to="." method="_on_letter_display_timer_timeout"]
