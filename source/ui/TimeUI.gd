@@ -3,6 +3,7 @@ extends Control
 @onready var daysLabel = get_node("%DaysLabel")
 @onready var hoursLabel = get_node("%HoursLabel")
 @onready var minutesLabel = get_node("%MinutesLabel")
+@onready var sprite = $Sprite2D
 
 const MINUTES_PER_DAY = 1440
 const MINUTES_PER_HOUR = 60
@@ -22,9 +23,11 @@ func _ready():
 	time = INGAME_TO_REAL_MINUTE_DURATION * INITIAL_HOUR * MINUTES_PER_HOUR
 
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	time += delta * INGAME_TO_REAL_MINUTE_DURATION * INGAME_SPEED
+	
 	recalculate_time()
 
 func recalculate_time():
@@ -38,6 +41,11 @@ func recalculate_time():
 		past_minute = minute
 		time_tick.emit(day, hour, minute)
 		set_time(day, hour, minute)
+		rotate_daytime_sprite(current_day_minutes)
+
+func rotate_daytime_sprite(current_day_minutes):
+	if current_day_minutes != 0:
+		sprite.rotation_degrees = ((current_day_minutes / 360.0) * 90) + 160 # Temp # Set the rotation of the daytime sprite to the current minute, one day is one full rotation.
 	
 func set_time(day, hour, minute):
 	daysLabel.text = 'Day'+ str(day+1)

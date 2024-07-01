@@ -4,6 +4,8 @@ class_name Pet
 
 @onready var timeUI = get_tree().get_first_node_in_group("TimeUI")
 @onready var reactionScene = preload("res://source/utility/reaction.tscn")
+@onready var poopItem = preload("res://source/objects/poop.tscn")
+@onready var shakeTween = $ShakeTween
 
 signal hungerChanged(value)
 signal happinessChanged(value)
@@ -22,14 +24,17 @@ const HYGINE_INTERVAL = 30
 const FUN_INTERVAL = 15
 const SOCIAL_INTERVAL = 30
 const TIRED_INTERVAL = 45
+const POOP_INTERVAL = 3
 
 # Counters
 var feed_counter = 0
 var pet_counter = 0
+var poop_counter = 0
 
 # counter limits
 var feed_limit = 4
 var pet_limit = 3
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -46,7 +51,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 		
 @export var hygiene: int = 80:
 	set(new_value):
-		hygiene = clamp(new_value, 0, 100)
+		hygiene = clamp(new_value, 0, (100 - min((poop_counter * 10), 100))) # Clamp hygiene from 0 to 100, but if there is poop, dont go higher than max  * poops * 10, also make sure it cant go below 0.
 		emit_signal('hygieneChanged', hygiene)
 		
 @export var fun: int = 40:
@@ -96,7 +101,7 @@ func process_time_events(_day, _hour, minute):
 	if minute % HAPPINESS_INTERVAL == 0:
 		happiness -= 5
 		pet_counter -= 1
-	if minute % HYGINE_INTERVAL == 0:
+	if minute % int(max(HYGINE_INTERVAL - (HYGINE_INTERVAL * poop_counter * 0.2), 5)) == 0: # Make hygiene interval shorter by 20% for each poop, dont go below max value (5)
 		hygiene -= 5
 	if minute % FUN_INTERVAL == 0:
 		fun -= 5
@@ -104,7 +109,26 @@ func process_time_events(_day, _hour, minute):
 		social -= 5
 	if minute % TIRED_INTERVAL == 0:
 		tiredness += 5
+	if minute % POOP_INTERVAL == 0:
+		random_poop_chance()
 
+func random_poop_chance():
+	var rand_num = randi_range(1,3 + poop_counter)
+	if rand_num == 1:
+		spawn_poop()
+		
+func spawn_poop():
+	hygiene -= 10
+	poop_counter += 1
+	var poop = poopItem.instantiate()
+	get_tree().current_scene.add_child(poop)
+	poop.poop_removed.connect(poop_removed)
+	poop.position = Vector2(global_position.x + randf_range(-200, 200), 355)
+
+func poop_removed():
+	poop_counter -= 1
+	happiness += 5
+	
 const lines: Array[String] = [
 	'Overfeeding'
 ]
@@ -125,6 +149,7 @@ func reaction_popup(reaction):
 func pet_action(action):
 	match action:
 		"feed":
+			shakeTween.start()
 			feed()
 		"love":
 			pet()
@@ -140,6 +165,7 @@ func pet_action(action):
 			#DialogManager.start_dialog(lines2)
 			
 func feed():
+	random_poop_chance()
 	feed_counter += 1
 	if feed_counter > feed_limit or hunger == 0:
 		print('feed counter 4: puke')
@@ -180,7 +206,7 @@ func clean():
 		fun -= 10
 	elif hygiene < 30:
 		happiness += 15
-	hygiene += 100
+	hygiene = 100
 
 func play():
 	fun += 25
