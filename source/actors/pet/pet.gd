@@ -6,14 +6,8 @@ class_name Pet
 @onready var reactionScene = preload("res://source/utility/reaction.tscn")
 @onready var poopItem = preload("res://source/objects/poop.tscn")
 @onready var shakeTween = $ShakeTween
+@onready var pet_stats = $PetStats
 
-signal hungerChanged(value)
-signal happinessChanged(value)
-signal hygieneChanged(value)
-signal funChanged(value)
-signal socialChanged(value)
-signal tirednessChanged(value)
-signal totalStatsChanged(value)
 
 signal coinsChanged(value)
 
@@ -46,51 +40,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 		coins = new_value
 		emit_signal('coinsChanged', coins)
 		
-# Stats
-@export var happiness: int = 40:
-	set(new_value):
-		happiness = clamp(new_value, 0, 100)
-		update_total_stats()
-		emit_signal('happinessChanged', happiness)
-		
-@export var hunger: int = 50:
-	set(new_value):
-		hunger = clamp(new_value, 0, 100)
-		update_total_stats()
-		emit_signal('hungerChanged', hunger)
-		
-@export var hygiene: int = 80:
-	set(new_value):
-		hygiene = clamp(new_value, 0, (100 - min((poop_counter * 10), 100))) # Clamp hygiene from 0 to 100, but if there is poop, dont go higher than max  * poops * 10, also make sure it cant go below 0.
-		update_total_stats()
-		emit_signal('hygieneChanged', hygiene)
-		
-@export var fun: int = 40:
-	set(new_value):
-		fun = clamp(new_value, 0, 100)
-		update_total_stats()
-		emit_signal('funChanged', fun)
 
-@export var social: int = 40:
-	set(new_value):
-		social = clamp(new_value, 0, 100)
-		update_total_stats()
-		emit_signal('socialChanged', social)
-		
-@export var tiredness: int = 40:
-	set(new_value):
-		tiredness = clamp(new_value, 0, 100)
-		update_total_stats()
-		emit_signal('tirednessChanged', tiredness)
-		
-@export var total_stats: int:
-	set(new_value):
-		total_stats = new_value
-		emit_signal('totalStatsChanged', total_stats)
-		
-func update_total_stats():
-	total_stats = happiness + hunger + hygiene + fun + social + tiredness
-	
 func _ready():
 	timeUI.time_tick.connect(process_time_events)
 
@@ -116,19 +66,19 @@ func _physics_process(delta):
 
 func process_time_events(_day, _hour, minute):
 	if minute % HUNGER_INTERVAL == 0:
-		hunger += 5
+		pet_stats.hunger += 5
 		feed_counter -= 1
 	if minute % HAPPINESS_INTERVAL == 0:
-		happiness -= 5
+		pet_stats.happiness -= 5
 		pet_counter -= 1
 	if minute % int(max(HYGINE_INTERVAL - (HYGINE_INTERVAL * poop_counter * 0.2), 5)) == 0: # Make hygiene interval shorter by 20% for each poop, dont go below max value (5)
-		hygiene -= 5
+		pet_stats.hygiene -= 5
 	if minute % FUN_INTERVAL == 0:
-		fun -= 5
+		pet_stats.fun -= 5
 	if minute % SOCIAL_INTERVAL == 0:
-		social -= 5
+		pet_stats.social -= 5
 	if minute % TIRED_INTERVAL == 0:
-		tiredness += 5
+		pet_stats.tiredness += 5
 	if minute % POOP_INTERVAL == 0:
 		random_poop_chance()
 
@@ -138,7 +88,7 @@ func random_poop_chance():
 		spawn_poop()
 		
 func spawn_poop():
-	hygiene -= 10
+	pet_stats.hygiene -= 10
 	poop_counter += 1
 	var poop = poopItem.instantiate()
 	get_tree().current_scene.add_child(poop)
@@ -147,7 +97,7 @@ func spawn_poop():
 
 func poop_removed():
 	poop_counter -= 1
-	happiness += 5
+	pet_stats.happiness += 5
 	
 func reaction_popup(reaction):
 	var reaction_instance = reactionScene.instantiate()
@@ -180,56 +130,56 @@ func pet_action(action):
 func feed():
 	random_poop_chance()
 	feed_counter += 1
-	if feed_counter > feed_limit or hunger == 0:
+	if feed_counter > feed_limit or pet_stats.hunger == 0:
 		print('feed counter 4: puke')
-		happiness -= 15
-		tiredness += 10
+		pet_stats.happiness -= 15
+		pet_stats.tiredness += 10
 		reaction_popup('sad')
 		return
-	if feed_counter == feed_limit or hunger < 10:
+	if feed_counter == feed_limit or pet_stats.hunger < 10:
 		reaction_popup('sick')
-		hunger -= 10
-		happiness -= 5
-		tiredness += 5
+		pet_stats.hunger -= 10
+		pet_stats.happiness -= 5
+		pet_stats.tiredness += 5
 		return
 	reaction_popup('happy')
-	hunger -= 25
-	happiness += 5
+	pet_stats.hunger -= 25
+	pet_stats.happiness += 5
 
 func pet():
 	pet_counter += 1
 	if pet_counter > pet_limit:
 		print('dont want pets now')
 		reaction_popup('sick')
-		happiness -=5
+		pet_stats.happiness -=5
 		return
 	if pet_counter == pet_limit:
 		reaction_popup('sick')
 		print('enough pets')
-		happiness +=5
+		pet_stats.happiness +=5
 		return
 	reaction_popup('love')
-	happiness += 15
+	pet_stats.happiness += 15
 	
 func clean():
-	if hygiene > 90:
-		fun -=15
-		happiness -= 10
-	elif hygiene > 70:
-		fun -= 10
-	elif hygiene < 30:
-		happiness += 15
-	hygiene = 100
+	if pet_stats.hygiene > 90:
+		pet_stats.fun -=15
+		pet_stats.happiness -= 10
+	elif pet_stats.hygiene > 70:
+		pet_stats.fun -= 10
+	elif pet_stats.hygiene < 30:
+		pet_stats.happiness += 15
+	pet_stats.hygiene = 100
 
 func play():
-	fun += 25
-	tiredness += 5
+	pet_stats.fun += 25
+	pet_stats.tiredness += 5
 	
 func socialize():
-	social += 25
-	tiredness += 5
-	hunger += 5
+	pet_stats.social += 25
+	pet_stats.tiredness += 5
+	pet_stats.hunger += 5
 
 func sleep():
-	tiredness -= 10
+	pet_stats.tiredness -= 10
 	

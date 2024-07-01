@@ -14,22 +14,22 @@ extends Control
 func _ready():
 	print(pet)
 	if pet:
-		pet.hungerChanged.connect(update_hunger)
-		pet.connect("happinessChanged", update_happiness)
-		pet.hygieneChanged.connect(update_hygiene)
-		pet.funChanged.connect(update_fun)
-		pet.socialChanged.connect(update_social)
-		pet.tirednessChanged.connect(update_tiredness)
-		pet.totalStatsChanged.connect(update_stats_total)
+		pet.pet_stats.hungerChanged.connect(update_hunger)
+		pet.pet_stats.connect("happinessChanged", update_happiness)
+		pet.pet_stats.hygieneChanged.connect(update_hygiene)
+		pet.pet_stats.funChanged.connect(update_fun)
+		pet.pet_stats.socialChanged.connect(update_social)
+		pet.pet_stats.tirednessChanged.connect(update_tiredness)
+		pet.pet_stats.totalStatsChanged.connect(update_stats_total)
 		update()
 
 func update():
-	update_hunger(pet.hunger)
-	update_happiness(pet.happiness)
-	update_hygiene(pet.hygiene)
-	update_fun(pet.fun)
-	update_social(pet.social)
-	update_tiredness(pet.tiredness)
+	update_hunger(pet.pet_stats.hunger)
+	update_happiness(pet.pet_stats.happiness)
+	update_hygiene(pet.pet_stats.hygiene)
+	update_fun(pet.pet_stats.fun)
+	update_social(pet.pet_stats.social)
+	update_tiredness(pet.pet_stats.tiredness)
 	
 func update_hunger(value):
 	hungerBar.value = value
