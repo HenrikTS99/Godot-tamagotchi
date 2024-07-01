@@ -7,6 +7,9 @@ extends Control
 @onready var funBar = get_node("%FunBar")
 @onready var socialBar = get_node("%SocialBar")
 @onready var tirednessBar = get_node("%TirednessBar")
+
+@onready var statsTotalLabel = get_node("%StatsTotal")
+@onready var statsAverageLabel = get_node("%StatsAverage")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print(pet)
@@ -17,6 +20,7 @@ func _ready():
 		pet.funChanged.connect(update_fun)
 		pet.socialChanged.connect(update_social)
 		pet.tirednessChanged.connect(update_tiredness)
+		pet.totalStatsChanged.connect(update_stats_total)
 		update()
 
 func update():
@@ -44,3 +48,10 @@ func update_social(value):
 	
 func update_tiredness(value):
 	tirednessBar.value = value
+	
+func update_stats_total(value):
+	statsTotalLabel.text = 'total:' + str(value)
+	update_stats_average(value)
+	
+func update_stats_average(value):
+	statsAverageLabel.text = 'average:' + str(value / 6)

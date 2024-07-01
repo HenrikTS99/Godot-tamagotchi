@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://b8hgdxdb8txpv" path="res://assets/img/green.webp" id="1_cx66j"]
 [ext_resource type="Texture2D" uid="uid://cid26mv4qe07s" path="res://assets/img/Terrain (16x16).png" id="3_xgax1"]
-[ext_resource type="PackedScene" uid="uid://r1srkhptyee1" path="res://source/actors/Pet.tscn" id="4_ufbrf"]
+[ext_resource type="PackedScene" uid="uid://r1srkhptyee1" path="res://source/actors/pet/Pet.tscn" id="4_ufbrf"]
 [ext_resource type="PackedScene" uid="uid://dqlrf8c1udujk" path="res://source/ui/StatsUI.tscn" id="5_hkmfi"]
 [ext_resource type="PackedScene" uid="uid://cqkb8dmn22any" path="res://source/ui/time_ui.tscn" id="6_1xm53"]
 [ext_resource type="PackedScene" uid="uid://xf3patarp24k" path="res://source/ui/buttons_ui.tscn" id="6_fxmxs"]
-[ext_resource type="PackedScene" uid="uid://bhb63kqc4m4j0" path="res://source/objects/poop.tscn" id="7_nfuaq"]
+[ext_resource type="Script" path="res://source/levels/CoinCounter.gd" id="7_t4r2m"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5u2nf"]
 texture = ExtResource("3_xgax1")
@@ -487,7 +487,11 @@ visible = false
 color = Color(0.288324, 0.455103, 0.688056, 1)
 
 [node name="TimeUI" parent="." instance=ExtResource("6_1xm53")]
-INGAME_SPEED = 100.0
 
-[node name="Poop" parent="." instance=ExtResource("7_nfuaq")]
-position = Vector2(272, 352)
+[node name="CoinCounter" type="Label" parent="."]
+offset_left = 324.0
+offset_top = 4.0
+offset_right = 364.0
+offset_bottom = 27.0
+text = "coins: 0"
+script = ExtResource("7_t4r2m")

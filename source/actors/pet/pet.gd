@@ -12,7 +12,10 @@ signal happinessChanged(value)
 signal hygieneChanged(value)
 signal funChanged(value)
 signal socialChanged(value)
-signal tirednessChanged()
+signal tirednessChanged(value)
+signal totalStatsChanged(value)
+
+signal coinsChanged(value)
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -24,7 +27,7 @@ const HYGINE_INTERVAL = 30
 const FUN_INTERVAL = 15
 const SOCIAL_INTERVAL = 30
 const TIRED_INTERVAL = 45
-const POOP_INTERVAL = 3
+const POOP_INTERVAL = 30
 
 # Counters
 var feed_counter = 0
@@ -38,42 +41,59 @@ var pet_limit = 3
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+@export var coins: int = 0:
+	set(new_value):
+		coins = new_value
+		emit_signal('coinsChanged', coins)
+		
 # Stats
 @export var happiness: int = 40:
 	set(new_value):
 		happiness = clamp(new_value, 0, 100)
+		update_total_stats()
 		emit_signal('happinessChanged', happiness)
 		
 @export var hunger: int = 50:
 	set(new_value):
 		hunger = clamp(new_value, 0, 100)
+		update_total_stats()
 		emit_signal('hungerChanged', hunger)
 		
 @export var hygiene: int = 80:
 	set(new_value):
 		hygiene = clamp(new_value, 0, (100 - min((poop_counter * 10), 100))) # Clamp hygiene from 0 to 100, but if there is poop, dont go higher than max  * poops * 10, also make sure it cant go below 0.
+		update_total_stats()
 		emit_signal('hygieneChanged', hygiene)
 		
 @export var fun: int = 40:
 	set(new_value):
 		fun = clamp(new_value, 0, 100)
+		update_total_stats()
 		emit_signal('funChanged', fun)
 
 @export var social: int = 40:
 	set(new_value):
 		social = clamp(new_value, 0, 100)
+		update_total_stats()
 		emit_signal('socialChanged', social)
 		
 @export var tiredness: int = 40:
 	set(new_value):
 		tiredness = clamp(new_value, 0, 100)
+		update_total_stats()
 		emit_signal('tirednessChanged', tiredness)
 		
-
+@export var total_stats: int:
+	set(new_value):
+		total_stats = new_value
+		emit_signal('totalStatsChanged', total_stats)
+		
+func update_total_stats():
+	total_stats = happiness + hunger + hygiene + fun + social + tiredness
+	
 func _ready():
 	timeUI.time_tick.connect(process_time_events)
 
-	
 	
 func _physics_process(delta):
 	# Add the gravity.
@@ -129,35 +149,28 @@ func poop_removed():
 	poop_counter -= 1
 	happiness += 5
 	
-const lines: Array[String] = [
-	'Overfeeding'
-]
-const lines1: Array[String] = [
-	'No more pets!',
-]
-const lines2: Array[String] = [
-	'IM NOT EEPY!!'
-]
-
 func reaction_popup(reaction):
 	var reaction_instance = reactionScene.instantiate()
 	get_tree().current_scene.add_child(reaction_instance)
 	reaction_instance.position = Vector2(global_position.x + randf() * 20 , global_position.y - randf_range(50, 80))
 	reaction_instance.set_reaction(reaction)
 	
-	
 func pet_action(action):
 	match action:
 		"feed":
 			shakeTween.start()
 			feed()
+			coins +=1
 		"love":
 			pet()
+			coins +=2
 			#DialogManager.start_dialog(lines1)
 		"clean":
 			clean()
+			coins +=3
 		"fun":
 			play()
+			coins +=4
 		"social":
 			socialize()
 		"sleep":

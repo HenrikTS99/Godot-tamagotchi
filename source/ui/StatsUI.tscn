@@ -108,3 +108,20 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 step = 1.0
+
+[node name="Debug" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 319.0
+offset_top = 105.0
+offset_right = 410.0
+offset_bottom = 196.0
+
+[node name="StatsTotal" type="Label" parent="Debug"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "test"
+
+[node name="StatsAverage" type="Label" parent="Debug"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "test"
