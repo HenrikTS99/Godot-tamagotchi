@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c6felwgxjmv8b"]
+[gd_scene load_steps=12 format=3 uid="uid://c6felwgxjmv8b"]
 
 [ext_resource type="Texture2D" uid="uid://b8hgdxdb8txpv" path="res://assets/img/green.webp" id="1_cx66j"]
 [ext_resource type="Texture2D" uid="uid://cid26mv4qe07s" path="res://assets/img/Terrain (16x16).png" id="3_xgax1"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://dqlrf8c1udujk" path="res://source/ui/StatsUI.tscn" id="5_hkmfi"]
 [ext_resource type="PackedScene" uid="uid://cqkb8dmn22any" path="res://source/ui/time_ui.tscn" id="6_1xm53"]
 [ext_resource type="PackedScene" uid="uid://xf3patarp24k" path="res://source/ui/buttons_ui.tscn" id="6_fxmxs"]
-[ext_resource type="Script" path="res://source/levels/CoinCounter.gd" id="7_t4r2m"]
+[ext_resource type="PackedScene" uid="uid://bdgkv6y4ook44" path="res://source/ui/coin_display.tscn" id="7_lrs1y"]
+[ext_resource type="Script" path="res://source/levels/DebugInterface.gd" id="8_5nyvm"]
+[ext_resource type="Script" path="res://source/levels/PetXpLabel.gd" id="8_rpysu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5u2nf"]
 texture = ExtResource("3_xgax1")
@@ -488,10 +490,20 @@ color = Color(0.288324, 0.455103, 0.688056, 1)
 
 [node name="TimeUI" parent="." instance=ExtResource("6_1xm53")]
 
-[node name="CoinCounter" type="Label" parent="."]
-offset_left = 324.0
-offset_top = 4.0
-offset_right = 364.0
-offset_bottom = 27.0
-text = "coins: 0"
-script = ExtResource("7_t4r2m")
+[node name="CoinDisplay" parent="." instance=ExtResource("7_lrs1y")]
+position = Vector2(335, 59)
+
+[node name="DebugInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("8_5nyvm")
+
+[node name="PetXpLabel" type="Label" parent="DebugInterface"]
+layout_mode = 0
+offset_left = 322.0
+offset_top = 157.0
+offset_right = 362.0
+offset_bottom = 180.0
+script = ExtResource("8_rpysu")

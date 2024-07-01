@@ -13,6 +13,8 @@ signal tirednessChanged(value)
 signal totalStatsChanged(value)
 
 # Stats
+
+var stats = ['happiness', 'hunger', 'hygiene', 'fun', 'social', 'tiredness']
 @export var happiness: int = 40:
 	set(new_value):
 		happiness = clamp(new_value, 0, 100)
@@ -53,6 +55,9 @@ signal totalStatsChanged(value)
 	set(new_value):
 		total_stats = new_value
 		emit_signal('totalStatsChanged', total_stats)
-		
+
+var average_stats : int
+
 func update_total_stats():
-	total_stats = happiness + hunger + hygiene + fun + social + tiredness
+	total_stats = happiness + (100 - hunger) + hygiene + fun + social + (100 - tiredness) # minus 100 hunger and tiredness because they are negative.
+	average_stats = total_stats / stats.size()

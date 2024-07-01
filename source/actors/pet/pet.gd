@@ -8,8 +8,8 @@ class_name Pet
 @onready var shakeTween = $ShakeTween
 @onready var pet_stats = $PetStats
 
-
 signal coinsChanged(value)
+signal xpGained(experience_level, experience, experience_required)
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -22,6 +22,7 @@ const FUN_INTERVAL = 15
 const SOCIAL_INTERVAL = 30
 const TIRED_INTERVAL = 45
 const POOP_INTERVAL = 30
+const XP_GAIN_INTERVAL = 10
 
 # Counters
 var feed_counter = 0
@@ -32,6 +33,13 @@ var poop_counter = 0
 var feed_limit = 4
 var pet_limit = 3
 
+# XP
+var experience = 0
+var collected_experience = 0
+@export var experience_level = 1
+var experience_required = get_required_experience(experience_level + 1)
+
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -39,8 +47,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 	set(new_value):
 		coins = new_value
 		emit_signal('coinsChanged', coins)
-		
 
+	
 func _ready():
 	timeUI.time_tick.connect(process_time_events)
 
@@ -81,6 +89,8 @@ func process_time_events(_day, _hour, minute):
 		pet_stats.tiredness += 5
 	if minute % POOP_INTERVAL == 0:
 		random_poop_chance()
+	if minute % XP_GAIN_INTERVAL == 0:
+		gain_xp_based_on_stats(pet_stats.average_stats)
 
 func random_poop_chance():
 	var rand_num = randi_range(1,3 + poop_counter)
@@ -110,17 +120,13 @@ func pet_action(action):
 		"feed":
 			shakeTween.start()
 			feed()
-			coins +=1
 		"love":
 			pet()
-			coins +=2
 			#DialogManager.start_dialog(lines1)
 		"clean":
 			clean()
-			coins +=3
 		"fun":
 			play()
-			coins +=4
 		"social":
 			socialize()
 		"sleep":
@@ -145,6 +151,7 @@ func feed():
 	reaction_popup('happy')
 	pet_stats.hunger -= 25
 	pet_stats.happiness += 5
+	gain_experience(2)
 
 func pet():
 	pet_counter += 1
@@ -160,6 +167,7 @@ func pet():
 		return
 	reaction_popup('love')
 	pet_stats.happiness += 15
+	gain_experience(2)
 	
 func clean():
 	if pet_stats.hygiene > 90:
@@ -170,16 +178,46 @@ func clean():
 	elif pet_stats.hygiene < 30:
 		pet_stats.happiness += 15
 	pet_stats.hygiene = 100
+	gain_experience(1)
 
 func play():
 	pet_stats.fun += 25
 	pet_stats.tiredness += 5
+	gain_experience(1)
 	
 func socialize():
 	pet_stats.social += 25
 	pet_stats.tiredness += 5
 	pet_stats.hunger += 5
+	gain_experience(1)
 
 func sleep():
 	pet_stats.tiredness -= 10
+	gain_experience(1)
 	
+#XP logic
+func get_required_experience(level):
+	return round(pow(level, 1.2) + level * 2 + 10) # Last num is additional xp points, so it wont start at 0
+	
+func gain_experience(amount):
+	collected_experience += amount
+	experience += amount
+	while experience >= experience_required:
+		experience -= experience_required
+		level_up()
+	emit_signal('xpGained', experience_level, experience, experience_required)
+		
+func level_up():
+	experience_level += 1
+	experience_required = get_required_experience(experience_level + 1)
+	award_coins_for_level_up(experience_level)
+	
+func award_coins_for_level_up(level):
+	coins += 3 + level
+		
+func gain_xp_based_on_stats(average_stats):
+	if average_stats < 50:
+		return
+	# Formula to give more xp depending on average stat level, 1 xp at 5 and 8  xp max. 
+	# To change formula, plus one number and minus the other.
+	gain_experience(average_stats/7 - 6)

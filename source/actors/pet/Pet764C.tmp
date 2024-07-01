@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://r1srkhptyee1"]
+
+[ext_resource type="Script" path="res://source/actors/pet/pet.gd" id="1_mp1so"]
+[ext_resource type="Texture2D" uid="uid://bhfjprgp4pnof" path="res://assets/img/capybara.png" id="2_lwjfl"]
+[ext_resource type="Script" path="res://source/actors/ShakeTween.gd" id="3_00fq3"]
+[ext_resource type="Script" path="res://source/actors/pet/PetStats.gd" id="4_mmn7c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tkmqf"]
+size = Vector2(94, 96)
+
+[node name="Pet" type="CharacterBody2D" groups=["Pet"]]
+script = ExtResource("1_mp1so")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.999969, -2)
+scale = Vector2(2, 2)
+texture = ExtResource("2_lwjfl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -2)
+shape = SubResource("RectangleShape2D_tkmqf")
+
+[node name="ShakeTween" type="Node" parent="."]
+script = ExtResource("3_00fq3")
+
+[node name="PetStats" type="Node" parent="."]
+script = ExtResource("4_mmn7c")
+happiness = null
+hunger = null
+hygiene = null
+fun = null
+social = null
+tiredness = null
+total_stats = null

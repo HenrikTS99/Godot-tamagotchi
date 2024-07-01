@@ -1,5 +1,6 @@
-extends Label
+extends Marker2D
 
+@onready var coinLabel = $CoinCounter
 @onready var pet = get_tree().get_first_node_in_group("Pet")
 
 func _ready():
@@ -8,4 +9,4 @@ func _ready():
 		
 
 func update_counter(value):
-	self.text = 'coins:' + str(value)
+	coinLabel.text = str(value)
