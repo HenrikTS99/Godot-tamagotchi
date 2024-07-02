@@ -60,4 +60,4 @@ var average_stats : int
 
 func update_total_stats():
 	total_stats = happiness + (100 - hunger) + hygiene + fun + social + (100 - tiredness) # minus 100 hunger and tiredness because they are negative.
-	average_stats = total_stats / stats.size()
+	average_stats = round(total_stats / stats.size())

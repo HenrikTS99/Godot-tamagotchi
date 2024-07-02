@@ -4,12 +4,14 @@ extends Control
 @onready var hoursLabel = get_node("%HoursLabel")
 @onready var minutesLabel = get_node("%MinutesLabel")
 @onready var sprite = $Sprite2D
+@onready var pet = get_tree().get_first_node_in_group("Pet")
 
 const MINUTES_PER_DAY = 1440
 const MINUTES_PER_HOUR = 60
 const INGAME_TO_REAL_MINUTE_DURATION = (2 * PI) / MINUTES_PER_DAY
 
 signal time_tick(day:int, hour:int, minute:int)
+
 
 @export var INGAME_SPEED = 1.0
 @export var INITIAL_HOUR = 12:
@@ -21,6 +23,7 @@ var past_minute = -1.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	time = INGAME_TO_REAL_MINUTE_DURATION * INITIAL_HOUR * MINUTES_PER_HOUR
+	pet.sleepingToggled.connect(sleep_toggled)
 
 
 
@@ -50,3 +53,9 @@ func rotate_daytime_sprite(current_day_minutes):
 func set_time(day, hour, minute):
 	daysLabel.text = 'Day'+ str(day+1)
 	hoursLabel.text = str(hour) + ':' + str(minute)
+	
+func sleep_toggled(sleeping):
+	if sleeping:
+		INGAME_SPEED = INGAME_SPEED * 2
+	else:
+		INGAME_SPEED = INGAME_SPEED / 2

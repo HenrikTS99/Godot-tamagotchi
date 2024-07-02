@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://tn071d5jikpq"]
+
+[ext_resource type="Script" path="res://source/inventory/items/item.gd" id="1_ycanx"]
+[ext_resource type="Texture2D" uid="uid://chpxf7hvnuvx6" path="res://assets/img/food/carrot.png" id="2_3k8x4"]
+
+[resource]
+script = ExtResource("1_ycanx")
+name = "carrot"
+texture = ExtResource("2_3k8x4")
+price = 1
+type = 1

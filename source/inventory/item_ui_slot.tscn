@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://ywfy0nxoj4an"]
+
+[ext_resource type="Texture2D" uid="uid://bcq50omgim77d" path="res://assets/img/inventory-slot.png" id="1_2fov0"]
+[ext_resource type="Script" path="res://source/inventory/item_ui_slot.gd" id="1_h4lv2"]
+
+[node name="ItemUISlot" type="Panel"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(16, 16)
+offset_right = 43.0
+offset_bottom = 43.0
+script = ExtResource("1_h4lv2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2.7, 2.7)
+texture = ExtResource("1_2fov0")
+centered = false
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 43.0
+offset_bottom = 43.0
+
+[node name="Panel" type="Panel" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="ItemDisplay" type="Sprite2D" parent="CenterContainer/Panel"]
+
+[node name="AmountLabel" type="Label" parent="CenterContainer/Panel"]
+layout_mode = 2
+offset_left = -4.0
+offset_top = 6.0
+offset_right = 30.0
+offset_bottom = 29.0
+scale = Vector2(0.7, 0.7)
+horizontal_alignment = 2
+
+[connection signal="gui_input" from="CenterContainer" to="." method="_on_center_container_gui_input"]

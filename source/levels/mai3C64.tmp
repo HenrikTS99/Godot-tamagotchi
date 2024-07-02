@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c6felwgxjmv8b"]
+[gd_scene load_steps=13 format=3 uid="uid://c6felwgxjmv8b"]
 
 [ext_resource type="Texture2D" uid="uid://b8hgdxdb8txpv" path="res://assets/img/green.webp" id="1_cx66j"]
 [ext_resource type="Texture2D" uid="uid://cid26mv4qe07s" path="res://assets/img/Terrain (16x16).png" id="3_xgax1"]
@@ -10,7 +10,6 @@
 [ext_resource type="Script" path="res://source/levels/DebugInterface.gd" id="8_5nyvm"]
 [ext_resource type="Script" path="res://source/levels/PetXpLabel.gd" id="8_rpysu"]
 [ext_resource type="PackedScene" uid="uid://cqp4177jiyqs4" path="res://source/ui/shop.tscn" id="10_g4wbb"]
-[ext_resource type="PackedScene" uid="uid://bgmol5skpa86r" path="res://source/ui/inv_ui.tscn" id="11_uxhrn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5u2nf"]
 texture = ExtResource("3_xgax1")
@@ -511,5 +510,3 @@ offset_bottom = 180.0
 script = ExtResource("8_rpysu")
 
 [node name="Shop" parent="." instance=ExtResource("10_g4wbb")]
-
-[node name="InvUI" parent="." instance=ExtResource("11_uxhrn")]

@@ -3,6 +3,10 @@
 [ext_resource type="Script" path="res://source/ui/ButtonsUI.gd" id="1_cyjms"]
 [ext_resource type="Texture2D" uid="uid://b4ioxkxhxr8tj" path="res://assets/img/spritesheetbuttons.png" id="2_0da43"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_da3yl"]
+atlas = ExtResource("2_0da43")
+region = Rect2(160, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_setar"]
 resource_local_to_scene = true
 atlas = ExtResource("2_0da43")
@@ -24,11 +28,7 @@ region = Rect2(96, 0, 32, 32)
 atlas = ExtResource("2_0da43")
 region = Rect2(128, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_da3yl"]
-atlas = ExtResource("2_0da43")
-region = Rect2(160, 0, 32, 32)
-
-[node name="ButtonsUI" type="Control"]
+[node name="ButtonsUI" type="Control" groups=["ButtonsUI"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,6 +37,18 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_cyjms")
+
+[node name="ShopButton" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+offset_left = 455.0
+offset_top = 376.0
+offset_right = 503.0
+offset_bottom = 424.0
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_da3yl")
+stretch_mode = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
@@ -103,6 +115,7 @@ size_flags_vertical = 4
 texture_normal = SubResource("AtlasTexture_da3yl")
 stretch_mode = 0
 
+[connection signal="pressed" from="ShopButton" to="." method="_on_shop_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/LoveButton" to="." method="_on_love_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/FeedButton" to="." method="_on_feed_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/CleanButton" to="." method="_on_clean_button_pressed"]

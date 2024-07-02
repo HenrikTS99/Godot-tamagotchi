@@ -8,8 +8,8 @@ class_name Pet
 @onready var shakeTween = $ShakeTween
 @onready var pet_stats = $PetStats
 
-signal coinsChanged(value)
 signal xpGained(experience_level, experience, experience_required)
+signal sleepingToggled(sleeping)
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -24,6 +24,7 @@ const TIRED_INTERVAL = 45
 const POOP_INTERVAL = 30
 const XP_GAIN_INTERVAL = 10
 
+var sleeping = false
 # Counters
 var feed_counter = 0
 var pet_counter = 0
@@ -39,16 +40,10 @@ var collected_experience = 0
 @export var experience_level = 1
 var experience_required = get_required_experience(experience_level + 1)
 
-
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-@export var coins: int = 0:
-	set(new_value):
-		coins = new_value
-		emit_signal('coinsChanged', coins)
 
-	
 func _ready():
 	timeUI.time_tick.connect(process_time_events)
 
@@ -73,6 +68,11 @@ func _physics_process(delta):
 
 
 func process_time_events(_day, _hour, minute):
+	if sleeping:
+		pet_stats.tiredness -= 1
+		reaction_popup('sick')
+		if pet_stats.tiredness == 0:
+			toggle_sleep()
 	if minute % HUNGER_INTERVAL == 0:
 		pet_stats.hunger += 5
 		feed_counter -= 1
@@ -85,7 +85,7 @@ func process_time_events(_day, _hour, minute):
 		pet_stats.fun -= 5
 	if minute % SOCIAL_INTERVAL == 0:
 		pet_stats.social -= 5
-	if minute % TIRED_INTERVAL == 0:
+	if minute % TIRED_INTERVAL == 0 and not sleeping:
 		pet_stats.tiredness += 5
 	if minute % POOP_INTERVAL == 0:
 		random_poop_chance()
@@ -116,6 +116,10 @@ func reaction_popup(reaction):
 	reaction_instance.set_reaction(reaction)
 	
 func pet_action(action):
+	if sleeping:
+		if action == "sleep":
+			toggle_sleep()
+		return
 	match action:
 		"feed":
 			shakeTween.start()
@@ -130,7 +134,7 @@ func pet_action(action):
 		"social":
 			socialize()
 		"sleep":
-			sleep()
+			toggle_sleep()
 			#DialogManager.start_dialog(lines2)
 			
 func feed():
@@ -191,9 +195,9 @@ func socialize():
 	pet_stats.hunger += 5
 	gain_experience(1)
 
-func sleep():
-	pet_stats.tiredness -= 10
-	gain_experience(1)
+func toggle_sleep():
+	sleeping = !sleeping
+	emit_signal("sleepingToggled", sleeping)
 	
 #XP logic
 func get_required_experience(level):
@@ -213,7 +217,7 @@ func level_up():
 	award_coins_for_level_up(experience_level)
 	
 func award_coins_for_level_up(level):
-	coins += 3 + level
+	Global.coins += 3 + level
 		
 func gain_xp_based_on_stats(average_stats):
 	if average_stats < 50:

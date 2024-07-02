@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://bvd5qdrh6n4d4"]
+
+[ext_resource type="Script" path="res://source/inventory/items/item.gd" id="1_4p3lf"]
+[ext_resource type="Texture2D" uid="uid://dten6r0x2rols" path="res://assets/img/food/fish.png" id="2_q4b73"]
+
+[resource]
+script = ExtResource("1_4p3lf")
+name = "fish"
+texture = ExtResource("2_q4b73")
+price = 3
+type = 1
