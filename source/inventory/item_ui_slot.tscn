@@ -5,7 +5,7 @@
 
 [node name="ItemUISlot" type="Panel"]
 self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(16, 16)
+custom_minimum_size = Vector2(43, 43)
 offset_right = 43.0
 offset_bottom = 43.0
 script = ExtResource("1_h4lv2")

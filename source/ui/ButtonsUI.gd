@@ -11,7 +11,7 @@ func _ready():
 	connect("selectedAction", Callable(pet, "pet_action"))
 
 func _on_feed_button_pressed():
-	emit_signal("openInventory", Item.ItemType)
+	emit_signal("openInventory", Item.ItemType.Food)
 	emit_signal("selectedAction", "feed")
 
 

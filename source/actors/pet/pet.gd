@@ -7,7 +7,7 @@ class_name Pet
 @onready var poopItem = preload("res://source/objects/poop.tscn")
 @onready var shakeTween = $ShakeTween
 @onready var pet_stats = $PetStats
-
+@onready var inventoryUI = get_tree().get_first_node_in_group("InventoryUI")
 signal xpGained(experience_level, experience, experience_required)
 signal sleepingToggled(sleeping)
 
@@ -46,6 +46,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _ready():
 	timeUI.time_tick.connect(process_time_events)
+	inventoryUI.foodSelected.connect(feed)
 
 	
 func _physics_process(delta):
@@ -123,7 +124,7 @@ func pet_action(action):
 	match action:
 		"feed":
 			shakeTween.start()
-			feed()
+			#feed()
 		"love":
 			pet()
 			#DialogManager.start_dialog(lines1)
@@ -137,7 +138,8 @@ func pet_action(action):
 			toggle_sleep()
 			#DialogManager.start_dialog(lines2)
 			
-func feed():
+func feed(food_item):
+	print('fed pet ', food_item.name)
 	random_poop_chance()
 	feed_counter += 1
 	if feed_counter > feed_limit or pet_stats.hunger == 0:

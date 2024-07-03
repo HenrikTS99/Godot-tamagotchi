@@ -131,7 +131,6 @@ grow_vertical = 2
 columns = 2
 
 [node name="ItemUISlot" parent="FoodStore/NinePatchRect/GridContainer" instance=ExtResource("4_wvank")]
-custom_minimum_size = Vector2(43, 43)
 layout_mode = 2
 
 [node name="ItemUISlot2" parent="FoodStore/NinePatchRect/GridContainer" instance=ExtResource("4_wvank")]

@@ -9,7 +9,6 @@ var item: Item
 signal itemPressed()
 
 func update(slot: InvSlot):
-	print(slot.item)
 	if !slot.item:
 		itemDisplay.visible = false
 		amount_label.visible = false
@@ -22,10 +21,6 @@ func update(slot: InvSlot):
 			amount_label.visible = false
 		amount_label.text = str(slot.amount)
 		item = slot.item
-
-
-func _on_center_container_mouse_entered(event):
-	pass
 
 
 func _on_center_container_gui_input(event):

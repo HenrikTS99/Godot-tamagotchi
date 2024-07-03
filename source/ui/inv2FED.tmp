@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bgmol5skpa86r"]
+[gd_scene load_steps=4 format=3 uid="uid://bgmol5skpa86r"]
 
 [ext_resource type="Script" path="res://source/ui/InvUI.gd" id="1_vdomp"]
 [ext_resource type="Texture2D" uid="uid://r05oud0to665" path="res://assets/img/inventory-background.png" id="2_kxm5m"]
+[ext_resource type="PackedScene" uid="uid://ywfy0nxoj4an" path="res://source/inventory/item_ui_slot.tscn" id="3_4yhbd"]
 
-[node name="InvUI" type="Control" groups=["InventoryUI"]]
+[node name="InvUI" type="Control"]
 custom_minimum_size = Vector2(87, 65)
 layout_mode = 3
 anchors_preset = 8
@@ -54,6 +55,13 @@ offset_bottom = 7.5
 grow_horizontal = 2
 grow_vertical = 2
 columns = 2
+
+[node name="ItemUISlot" parent="NinePatchRect/GridContainer" instance=ExtResource("3_4yhbd")]
+custom_minimum_size = Vector2(43, 43)
+layout_mode = 2
+
+[node name="ItemUISlot2" parent="NinePatchRect/GridContainer" instance=ExtResource("3_4yhbd")]
+layout_mode = 2
 
 [node name="CloseButton" type="Button" parent="."]
 layout_mode = 0
