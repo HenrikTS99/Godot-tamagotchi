@@ -2,17 +2,33 @@ extends CharacterBody2D
 
 class_name Pet 
 
+
+
+@onready var shakeTween = $ShakeTween
+@onready var pet_stats = $PetStats
+@onready var anim_player = $AnimationPlayer
+@onready var sprite = $Sprite2D
+
 @onready var timeUI = get_tree().get_first_node_in_group("TimeUI")
 @onready var reactionScene = preload("res://source/utility/reaction.tscn")
 @onready var poopItem = preload("res://source/objects/poop.tscn")
-@onready var shakeTween = $ShakeTween
-@onready var pet_stats = $PetStats
+@onready var itemScene = preload("res://source/objects/itemScene.tscn")
 @onready var inventoryUI = get_tree().get_first_node_in_group("InventoryUI")
+
+@export var resource: Resource:
+	set(new_resource):
+		resource = new_resource
+		if sprite:
+			update_resource()
+		else:
+			call_deferred("update_resource")
+		
 signal xpGained(experience_level, experience, experience_required)
 signal sleepingToggled(sleeping)
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
+const CENTER_POS = Vector2(256, 318)
 
 # Stats interval before change, set in in-game minutes
 const HUNGER_INTERVAL = 10
@@ -67,7 +83,13 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	move_and_slide()
 
-
+func update_resource():
+	sprite.texture = resource.texture
+	
+func reset_stats():
+	print('stats reset')
+	pet_stats.reset_average_stat_tracking()
+	
 func process_time_events(_day, _hour, minute):
 	if sleeping:
 		pet_stats.tiredness -= 1
@@ -123,8 +145,9 @@ func pet_action(action):
 		return
 	match action:
 		"feed":
-			shakeTween.start()
+			# shakeTween.start()
 			#feed()
+			pass
 		"love":
 			pet()
 			#DialogManager.start_dialog(lines1)
@@ -139,6 +162,10 @@ func pet_action(action):
 			#DialogManager.start_dialog(lines2)
 			
 func feed(food_item):
+	var food = spawn_food(food_item)
+	anim_player.play("Eating")
+	await anim_player.animation_finished
+	food.queue_free()
 	print('fed pet ', food_item.name)
 	random_poop_chance()
 	feed_counter += 1
@@ -159,6 +186,14 @@ func feed(food_item):
 	pet_stats.happiness += 5
 	gain_experience(2)
 
+func spawn_food(food_item):
+	var food = itemScene.instantiate()
+	food.item = food_item
+	get_tree().current_scene.add_child(food)
+	food.position = Vector2(global_position.x - 35, 340)
+	food.bobble_anim()
+	return food
+	
 func pet():
 	pet_counter += 1
 	if pet_counter > pet_limit:
@@ -227,3 +262,19 @@ func gain_xp_based_on_stats(average_stats):
 	# Formula to give more xp depending on average stat level, 1 xp at 5 and 8  xp max. 
 	# To change formula, plus one number and minus the other.
 	gain_experience(average_stats/7 - 6)
+
+func walk_into_scene():
+	print('teleporting out and walking in...')
+	print(global_position)
+	global_position = Vector2(600, CENTER_POS.y)
+	print(global_position)
+	var tween = get_tree().create_tween()
+	#position
+	tween.tween_property(self, "global_position", CENTER_POS, 1)
+	
+func walk_out_of_scene():
+	print('walk out of scene...')
+	var new_position = Vector2(-50, position.y)
+	var tween = get_tree().create_tween()
+	#position
+	tween.tween_property(self, "global_position", new_position, 1)

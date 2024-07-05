@@ -7,8 +7,3 @@ func _ready():
 	if _pet:
 		_pet.xpGained.connect(_petXpLabel.update_label)
 	_petXpLabel.update_label(_pet.experience_level, _pet.experience, _pet.experience_required)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://bdgkv6y4ook44"]
 
-[ext_resource type="Script" path="res://source/levels/CoinCounter.gd" id="1_xmp6g"]
+[ext_resource type="Script" path="res://source/scripts/CoinCounter.gd" id="1_xmp6g"]
 [ext_resource type="Texture2D" uid="uid://d2i8wlqqqv23s" path="res://assets/img/coin.png" id="2_e2s8v"]
 
-[node name="CoinDisplay" type="Marker2D"]
+[node name="CoinDisplay" type="Marker2D" groups=["CoinDisplay"]]
 position = Vector2(17, 18)
 script = ExtResource("1_xmp6g")
 

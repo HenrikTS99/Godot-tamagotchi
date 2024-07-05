@@ -16,6 +16,7 @@ var shop_active = false
 func _ready():
 	self.visible = false
 	buttons_ui.openInventory.connect(open_inventory)
+	buttons_ui.closeUI.connect(close_inventory)
 	#inv.update.connect(update)
 	inv.itemRemoved.connect(remove_item_ui_slot)
 		
@@ -73,6 +74,11 @@ func item_selected(item: Item):
 	close_inventory()
 		
 func open_inventory(item_type):
+	# Close if already open
+	print(self.visible)
+	if self.visible == true:
+		close_inventory()
+		return
 	update(item_type)
 	self.visible = true
 	

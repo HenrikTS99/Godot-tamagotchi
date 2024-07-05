@@ -16,17 +16,16 @@ func _ready():
 func connect_slots_signals(slots):
 	for slot in slots:
 		slot.itemPressed.connect(item_selected)
+		
 func update_slots():
 	for i in range(min(inv.slots.size(), slots.size())):
 		slots[i].update(inv.slots[i])
-
 
 func item_selected(item):
 	selected_item = item
 	selected_item_sprite.texture = item.texture
 	selected_item_label.text = item.name
 	item_price_label.text = 'Price:' + str(item.price)
-
 
 func _on_button_pressed():
 	if selected_item:

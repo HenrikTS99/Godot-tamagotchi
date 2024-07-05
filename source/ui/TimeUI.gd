@@ -12,6 +12,9 @@ const INGAME_TO_REAL_MINUTE_DURATION = (2 * PI) / MINUTES_PER_DAY
 
 signal time_tick(day:int, hour:int, minute:int)
 
+var day: int
+var hour: int
+var minute: int
 
 @export var INGAME_SPEED = 1.0
 @export var INITIAL_HOUR = 12:
@@ -35,10 +38,10 @@ func _process(delta):
 
 func recalculate_time():
 	var total_minutes = int(time / INGAME_TO_REAL_MINUTE_DURATION)
-	var day = int(total_minutes / MINUTES_PER_DAY)
+	day = int(total_minutes / MINUTES_PER_DAY)
 	var current_day_minutes = total_minutes % MINUTES_PER_DAY
-	var hour = int(current_day_minutes / MINUTES_PER_HOUR)
-	var minute = int(current_day_minutes % MINUTES_PER_HOUR)
+	hour = int(current_day_minutes / MINUTES_PER_HOUR)
+	minute = int(current_day_minutes % MINUTES_PER_HOUR)
 	
 	if minute != past_minute:
 		past_minute = minute

@@ -57,7 +57,23 @@ var stats = ['happiness', 'hunger', 'hygiene', 'fun', 'social', 'tiredness']
 		emit_signal('totalStatsChanged', total_stats)
 
 var average_stats : int
+var cumulative_avg_stats = 0.0
+var update_stats_count = 0
 
 func update_total_stats():
 	total_stats = happiness + (100 - hunger) + hygiene + fun + social + (100 - tiredness) # minus 100 hunger and tiredness because they are negative.
 	average_stats = round(total_stats / stats.size())
+	
+	cumulative_avg_stats += average_stats
+	update_stats_count += 1
+	
+func get_overall_average_stats() -> float:
+	if update_stats_count == 0:
+		return 0
+	return cumulative_avg_stats / update_stats_count
+	
+func reset_average_stat_tracking():
+	cumulative_avg_stats = 0.0
+	update_stats_count = 0
+	# Update after reset to get a first snapshot
+	update_total_stats()

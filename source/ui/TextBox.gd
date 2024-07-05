@@ -13,14 +13,6 @@ var punctuation_time = 0.2
 
 signal finished_displaying()
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func display_text(text_to_display: String):
 	text = text_to_display
@@ -53,7 +45,6 @@ func _display_letter():
 			timer.start(space_time)
 		_:
 			timer.start(letter_time)
-
 
 func _on_letter_display_timer_timeout():
 	_display_letter()

@@ -1,6 +1,7 @@
 extends Marker2D
 
 @onready var coinLabel = $CoinCounter
+@onready var sprite = $Sprite2D
 
 func _ready():
 	Global.coinsChanged.connect(update_counter)

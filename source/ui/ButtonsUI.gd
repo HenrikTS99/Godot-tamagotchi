@@ -5,6 +5,7 @@ extends Control
 signal selectedAction(action)
 signal selectedShop()
 signal openInventory()
+signal closeUI()
 
 
 func _ready():
@@ -37,4 +38,5 @@ func _on_sleep_button_pressed():
 
 
 func _on_shop_button_pressed():
+	emit_signal("closeUI")
 	emit_signal("selectedShop")

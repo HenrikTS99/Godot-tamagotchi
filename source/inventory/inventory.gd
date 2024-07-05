@@ -31,9 +31,7 @@ func remove_item(item: Item):
 		return
 	assert(false, "Item not found in inventory: %s" % item.name)
 		
-		
-		
 func add_slot():
-	print('extra slot added')
+	print('extra inv slot added')
 	var new_slot = InvSlot.new()
 	slots.append(new_slot)
