@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://r05oud0to665" path="res://assets/img/inventory-background.png" id="1_efp2u"]
 [ext_resource type="Script" path="res://source/ui/pet_introduction_ui.gd" id="1_ss72o"]
-[ext_resource type="Texture2D" uid="uid://bhfjprgp4pnof" path="res://assets/img/capybara.png" id="2_ljxed"]
+[ext_resource type="Texture2D" uid="uid://bhfjprgp4pnof" path="res://assets/img/Pets/capybara.png" id="2_ljxed"]
 
 [node name="PetIntroductionUI" type="Control" groups=["PetIntroductionUI"]]
 process_mode = 3

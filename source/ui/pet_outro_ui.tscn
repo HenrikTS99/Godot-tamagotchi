@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://source/ui/pet_outro_ui.gd" id="1_4nlp0"]
 [ext_resource type="Texture2D" uid="uid://r05oud0to665" path="res://assets/img/inventory-background.png" id="2_0vvje"]
-[ext_resource type="Texture2D" uid="uid://bhfjprgp4pnof" path="res://assets/img/capybara.png" id="3_2gchu"]
+[ext_resource type="Texture2D" uid="uid://bhfjprgp4pnof" path="res://assets/img/Pets/capybara.png" id="3_2gchu"]
 [ext_resource type="Texture2D" uid="uid://d2i8wlqqqv23s" path="res://assets/img/coin.png" id="4_sqp3e"]
 
 [node name="PetOutroUI" type="Control" groups=["PetIntroductionUI"]]

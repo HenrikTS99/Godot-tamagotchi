@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhfjprgp4pnof"
-path="res://.godot/imported/capybara.png-d54f389ca5bfc5fb69ac4e29bbf313d2.ctex"
+uid="uid://vspjpgorrr3n"
+path="res://.godot/imported/hungerbar.png-1d351675fb4e6c74eb9af008502ea16f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/capybara.png"
-dest_files=["res://.godot/imported/capybara.png-d54f389ca5bfc5fb69ac4e29bbf313d2.ctex"]
+source_file="res://assets/img/UI/hungerbar.png"
+dest_files=["res://.godot/imported/hungerbar.png-1d351675fb4e6c74eb9af008502ea16f.ctex"]
 
 [params]
 

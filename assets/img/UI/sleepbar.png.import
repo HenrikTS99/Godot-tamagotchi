@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ejunwhnvhvsm"
-path="res://.godot/imported/bin.png-40ba457683c1e5e508422dd351acec04.ctex"
+uid="uid://cwlvy47us85eb"
+path="res://.godot/imported/sleepbar.png-b222f0e68e13d5d6898bd13a14ccd38d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/bin.png"
-dest_files=["res://.godot/imported/bin.png-40ba457683c1e5e508422dd351acec04.ctex"]
+source_file="res://assets/img/UI/sleepbar.png"
+dest_files=["res://.godot/imported/sleepbar.png-b222f0e68e13d5d6898bd13a14ccd38d.ctex"]
 
 [params]
 

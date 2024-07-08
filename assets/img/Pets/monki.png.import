@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4ioxkxhxr8tj"
-path="res://.godot/imported/spritesheetbuttons.png-3e07a0ffaaa2e406520fde3270b4993d.ctex"
+uid="uid://byedsvlx673ru"
+path="res://.godot/imported/monki.png-d9fe494f9bf2e895a582e23f678adf34.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/spritesheetbuttons.png"
-dest_files=["res://.godot/imported/spritesheetbuttons.png-3e07a0ffaaa2e406520fde3270b4993d.ctex"]
+source_file="res://assets/img/Pets/monki.png"
+dest_files=["res://.godot/imported/monki.png-d9fe494f9bf2e895a582e23f678adf34.ctex"]
 
 [params]
 

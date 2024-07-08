@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4p2io2d5v0ve"
-path="res://.godot/imported/shopbasket.png-8035402afec301075b4b0472ca525147.ctex"
+uid="uid://cj02tmjc5f21w"
+path="res://.godot/imported/pcboarder.png-0e349154999a24ed13d0ce931cbd34e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/shopbasket.png"
-dest_files=["res://.godot/imported/shopbasket.png-8035402afec301075b4b0472ca525147.ctex"]
+source_file="res://assets/img/UI/pcboarder.png"
+dest_files=["res://.godot/imported/pcboarder.png-0e349154999a24ed13d0ce931cbd34e4.ctex"]
 
 [params]
 

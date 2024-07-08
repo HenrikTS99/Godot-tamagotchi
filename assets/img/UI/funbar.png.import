@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cj02tmjc5f21w"
-path="res://.godot/imported/pcboarder.png-8df4a850d19037bb7971dbc21392dd20.ctex"
+uid="uid://qyblfl5s1o6q"
+path="res://.godot/imported/funbar.png-8e751c4025bf383ec78f59039d6afa0b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/pcboarder.png"
-dest_files=["res://.godot/imported/pcboarder.png-8df4a850d19037bb7971dbc21392dd20.ctex"]
+source_file="res://assets/img/UI/funbar.png"
+dest_files=["res://.godot/imported/funbar.png-8e751c4025bf383ec78f59039d6afa0b.ctex"]
 
 [params]
 

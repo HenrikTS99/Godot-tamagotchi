@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://k2vxwnrk2xq8"
-path="res://.godot/imported/guestbook.png-b244184b8517671de9a5921faa4c441f.ctex"
+uid="uid://b4ioxkxhxr8tj"
+path="res://.godot/imported/spritesheetbuttons.png-f84545c1d8457cd17a50e2560fc9f2d8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/img/guestbook.png"
-dest_files=["res://.godot/imported/guestbook.png-b244184b8517671de9a5921faa4c441f.ctex"]
+source_file="res://assets/img/UI/spritesheetbuttons.png"
+dest_files=["res://.godot/imported/spritesheetbuttons.png-f84545c1d8457cd17a50e2560fc9f2d8.ctex"]
 
 [params]
 
