@@ -13,15 +13,18 @@ var current_guest_pet_resource = null
 var pet_introduction_ui = null
 var pet_outro_ui = null
 var HOURS_PER_DAY = 24
-var pet_entry_time = { "day": 0, "hour": 0, "minute": 0 }
 var pet_exit_time = { "day": 0, "hour": 0, "minute": 0 }
 var pet_introduced = false
-var reviews_data = {}
-var file_path
+var reviews_data: Dictionary = {}
+var file_path: String
 
 func _ready():
 	await get_tree().create_timer(1).timeout
 	reviews_data = load_json_file(reviews_json_path)
+	if reviews_data.is_empty():
+		push_error("Failed to load reviews data.")
+		return
+		
 	timeUI.time_tick.connect(check_if_stay_over)
 	introduce_guest_pet()
 
@@ -38,29 +41,24 @@ func load_json_file(file_path: String):
 	
 	
 func check_if_stay_over(day, hour, minute):
-	if pet_introduced:
-		if day == pet_exit_time.day and hour == pet_exit_time.hour and minute == pet_exit_time.minute:
-			_stay_over()
+	if pet_introduced and day == pet_exit_time.day and hour == pet_exit_time.hour and minute == pet_exit_time.minute:
+		_stay_over()
 
-func set_pet_exit_time(pet_entry_time):
+func set_pet_exit_time():
 	var stay_duration_days = int(stay_duration_hours / HOURS_PER_DAY)
 	var hours = stay_duration_hours % HOURS_PER_DAY
-	pet_exit_time.day = pet_entry_time.day + stay_duration_days
-	pet_exit_time.hour = pet_entry_time.hour + hours - hours 
-	pet_exit_time.minute = pet_entry_time.minute + 4
+	pet_exit_time.day = timeUI.day + stay_duration_days
+	pet_exit_time.hour = timeUI.hour + hours - hours 
+	pet_exit_time.minute = timeUI.minute + 8
 	
 func introduce_guest_pet():
 	current_guest_pet_resource = guest_pet_resources[randi() % guest_pet_resources.size()]
 	show_pet_intro(current_guest_pet_resource)
 	_pet.walk_into_scene()
 	_pet.resource = current_guest_pet_resource
-	reset_pet_stats()
+	_pet.reset_stats() 
 	stay_duration_hours = randi_range(1, 1)
-	pet_entry_time.day = timeUI.day
-	pet_entry_time.hour = timeUI.hour
-	pet_entry_time.minute = timeUI.minute
-	set_pet_exit_time(pet_entry_time)
-	print('current time:', pet_entry_time)
+	set_pet_exit_time()
 	print('exit time:', pet_exit_time)
 	pet_introduced = true
 
@@ -91,24 +89,23 @@ func show_pet_outro(pet_data, average_stats, review, star_rating, coin_amount):
 	}
 	pet_outro_ui = petOutroUI.instantiate()
 	get_parent().add_child(pet_outro_ui)
-	
 	pet_outro_ui.set_pet_info(pet_details)
 	await pet_outro_ui.tree_exited
 	
 func _stay_over():
 	pet_introduced = false
-	if current_guest_pet_resource:
-		var average_stats = _pet.pet_stats.get_overall_average_stats()
-		var star_rating = get_star_rating(average_stats)
-		var review = evaluate_care(star_rating)
-		var coin_amount = calculate_coins_reward(star_rating)
-		await show_pet_outro(current_guest_pet_resource, average_stats, review, star_rating, coin_amount)
-		Global.coins += coin_amount
-		_pet.walk_out_of_scene()
-		await get_tree().create_timer(1).timeout
-		introduce_guest_pet()
+	
 		
-func evaluate_care(rating):
+	var average_stats = _pet.pet_stats.get_overall_average_stats()
+	var star_rating = get_star_rating(average_stats)
+	var review = evaluate_care(star_rating)
+	var coin_amount = calculate_coins_reward(star_rating)
+	await show_pet_outro(current_guest_pet_resource, average_stats, review, star_rating, coin_amount)
+	_pet.walk_out_of_scene()
+	await get_tree().create_timer(1).timeout
+	introduce_guest_pet()
+		
+func evaluate_care(rating: int) -> String:
 	var all_rating_reviews = reviews_data[str(rating)]
 	return all_rating_reviews[randi() % all_rating_reviews.size()]
 
@@ -122,7 +119,3 @@ func calculate_coins_reward(star_rating):
 	var reward =  int(stay_duration_hours * (1 + (star_rating-3) * precentage_per_star/ 100)) + 10
 	print('coins rewarded', reward)
 	return reward
-
-
-func reset_pet_stats():
-	_pet.reset_stats() 

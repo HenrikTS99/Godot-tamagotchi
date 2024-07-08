@@ -3,7 +3,6 @@ extends CharacterBody2D
 class_name Pet 
 
 
-
 @onready var shakeTween = $ShakeTween
 @onready var pet_stats = $PetStats
 @onready var anim_player = $AnimationPlayer
@@ -88,7 +87,9 @@ func update_resource():
 	
 func reset_stats():
 	print('stats reset')
+	pet_stats.reset_and_randomize_stats()
 	pet_stats.reset_average_stat_tracking()
+	
 	
 func process_time_events(_day, _hour, minute):
 	if sleeping:
@@ -264,7 +265,6 @@ func gain_xp_based_on_stats(average_stats):
 	gain_experience(average_stats/7 - 6)
 
 func walk_into_scene():
-	print('teleporting out and walking in...')
 	print(global_position)
 	global_position = Vector2(600, CENTER_POS.y)
 	print(global_position)
@@ -273,7 +273,8 @@ func walk_into_scene():
 	tween.tween_property(self, "global_position", CENTER_POS, 1)
 	
 func walk_out_of_scene():
-	print('walk out of scene...')
+	if sleeping:
+		toggle_sleep()
 	var new_position = Vector2(-50, position.y)
 	var tween = get_tree().create_tween()
 	#position

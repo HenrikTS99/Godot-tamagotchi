@@ -15,7 +15,8 @@ extends Control
 
 var unfilledColor = Color(0.3, 0.3, 0.3)
 var coins_amount: int
-
+var SPAWN_OFFSET = 10
+var coin_delay = 0.3
 func _ready():
 	pass
 	
@@ -40,20 +41,30 @@ func set_star_rating(rating: int):
 
 func instance_coin(i):
 	var coin = coinScene.instantiate()
-	coin.global_position = Vector2(claimButton.global_position.x, claimButton.global_position.y)
-	add_child(coin)
+	var button_size = claimButton.size
+	coin.global_position = Vector2(claimButton.global_position.x, claimButton.global_position.y) + button_size/2 + Vector2(randi_range(-SPAWN_OFFSET, SPAWN_OFFSET), randi_range(-SPAWN_OFFSET,SPAWN_OFFSET))
+	get_parent().add_child(coin)
 	return coin
 
 func animation_tween(coins, final_pos):
 	for i in range(coins):
 		var coin = instance_coin(i)
 		var tween = get_tree().create_tween()
-		tween.tween_property(coin, "global_position", final_pos, 1)
-		await get_tree().create_timer(.1).timeout
+		tween.tween_property(coin, "global_position", final_pos, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+		tween.finished.connect(_coin_tween_finished)
+		if i == coins - 1:
+			await tween.finished
+		await get_tree().create_timer(coin_delay).timeout
+		coin_delay *= 0.9
 	return
-		
+
+func _coin_tween_finished():
+	Global.coins += 1
+	
 func _on_continue_button_pressed():
-	# self.visible = false
+	self.visible = false
 	get_tree().paused = false
-	await animation_tween(coins_amount, coinDisplay.global_position)
+	var coin_size = coinDisplay.sprite.texture.get_size()
+	var final_global_pos = coinDisplay.global_position - coin_size/2
+	await animation_tween(coins_amount, final_global_pos)
 	queue_free()
