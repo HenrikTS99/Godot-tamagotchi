@@ -116,6 +116,5 @@ func get_star_rating(average_stats):
 func calculate_coins_reward(star_rating):
 	# Gain more or less coins based on star rating. Median is 3 stars.
 	var precentage_per_star = 25
-	var reward =  int(stay_duration_hours * (1 + (star_rating-3) * precentage_per_star/ 100)) + 10
-	print('coins rewarded', reward)
+	var reward =  int(stay_duration_hours * (1 + (star_rating-3) * precentage_per_star/ 100))
 	return reward

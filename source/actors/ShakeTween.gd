@@ -13,7 +13,6 @@ signal tween_completed
 
 
 func start():
-	print('start shake...')
 	var x = x_max
 	var r = r_max
 	while x > STOP_THERSHOLD:

@@ -12,7 +12,6 @@ extends Control
 @onready var statsAverageLabel = get_node("%StatsAverage")
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(pet)
 	if pet:
 		pet.pet_stats.hungerChanged.connect(update_hunger)
 		pet.pet_stats.connect("happinessChanged", update_happiness)

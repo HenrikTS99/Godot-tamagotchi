@@ -7,6 +7,7 @@ class_name Pet
 @onready var pet_stats = $PetStats
 @onready var anim_player = $AnimationPlayer
 @onready var sprite = $Sprite2D
+@onready var petDebugLabel = $PetDebugLabel
 
 @onready var timeUI = get_tree().get_first_node_in_group("TimeUI")
 @onready var reactionScene = preload("res://source/utility/reaction.tscn")
@@ -24,6 +25,7 @@ class_name Pet
 		
 signal xpGained(experience_level, experience, experience_required)
 signal sleepingToggled(sleeping)
+signal itemConsumed(item)
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -39,7 +41,14 @@ const TIRED_INTERVAL = 45
 const POOP_INTERVAL = 30
 const XP_GAIN_INTERVAL = 10
 
-var sleeping = false
+# States
+enum PetState {
+	IDLE,
+	WALKING,
+	EATING,
+	SLEEPING
+}
+var state: PetState = PetState.IDLE
 # Counters
 var feed_counter = 0
 var pet_counter = 0
@@ -65,6 +74,8 @@ func _ready():
 
 	
 func _physics_process(delta):
+	# Debug state
+	petDebugLabel.text = PetState.keys()[state]
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -86,13 +97,12 @@ func update_resource():
 	sprite.texture = resource.texture
 	
 func reset_stats():
-	print('stats reset')
 	pet_stats.reset_and_randomize_stats()
 	pet_stats.reset_average_stat_tracking()
 	
 	
 func process_time_events(_day, _hour, minute):
-	if sleeping:
+	if state == PetState.SLEEPING:
 		pet_stats.tiredness -= 1
 		reaction_popup('sick')
 		if pet_stats.tiredness == 0:
@@ -109,7 +119,7 @@ func process_time_events(_day, _hour, minute):
 		pet_stats.fun -= 5
 	if minute % SOCIAL_INTERVAL == 0:
 		pet_stats.social -= 5
-	if minute % TIRED_INTERVAL == 0 and not sleeping:
+	if minute % TIRED_INTERVAL == 0 and state != PetState.SLEEPING:
 		pet_stats.tiredness += 5
 	if minute % POOP_INTERVAL == 0:
 		random_poop_chance()
@@ -140,7 +150,7 @@ func reaction_popup(reaction):
 	reaction_instance.set_reaction(reaction)
 	
 func pet_action(action):
-	if sleeping:
+	if state == PetState.SLEEPING:
 		if action == "sleep":
 			toggle_sleep()
 		return
@@ -163,11 +173,15 @@ func pet_action(action):
 			#DialogManager.start_dialog(lines2)
 			
 func feed(food_item):
+	if state in [PetState.WALKING, PetState.EATING]:
+		print('pet cant eat now')
+		return
 	var food = spawn_food(food_item)
+	state = PetState.EATING
 	anim_player.play("Eating")
 	await anim_player.animation_finished
+	state = PetState.IDLE
 	food.queue_free()
-	print('fed pet ', food_item.name)
 	random_poop_chance()
 	feed_counter += 1
 	if feed_counter > feed_limit or pet_stats.hunger == 0:
@@ -186,6 +200,7 @@ func feed(food_item):
 	pet_stats.hunger -= 25
 	pet_stats.happiness += 5
 	gain_experience(2)
+	emit_signal("itemConsumed", food_item)
 
 func spawn_food(food_item):
 	var food = itemScene.instantiate()
@@ -234,8 +249,13 @@ func socialize():
 	gain_experience(1)
 
 func toggle_sleep():
-	sleeping = !sleeping
-	emit_signal("sleepingToggled", sleeping)
+	if state in [PetState.WALKING, PetState.EATING]:
+		return
+	if state == PetState.SLEEPING:
+		state = PetState.IDLE
+	else:
+		state = PetState.SLEEPING
+	emit_signal("sleepingToggled", state)
 	
 #XP logic
 func get_required_experience(level):
@@ -265,17 +285,19 @@ func gain_xp_based_on_stats(average_stats):
 	gain_experience(average_stats/7 - 6)
 
 func walk_into_scene():
-	print(global_position)
+	state = PetState.WALKING
 	global_position = Vector2(600, CENTER_POS.y)
-	print(global_position)
 	var tween = get_tree().create_tween()
-	#position
 	tween.tween_property(self, "global_position", CENTER_POS, 1)
+	await tween.finished
+	state = PetState.IDLE
 	
 func walk_out_of_scene():
-	if sleeping:
+	if state == PetState.SLEEPING:
 		toggle_sleep()
+	state = PetState.WALKING
 	var new_position = Vector2(-50, position.y)
 	var tween = get_tree().create_tween()
-	#position
 	tween.tween_property(self, "global_position", new_position, 1)
+	await tween.finished
+	state = PetState.IDLE

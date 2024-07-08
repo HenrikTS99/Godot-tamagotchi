@@ -26,12 +26,10 @@ func remove_item(item: Item):
 		if item_slots[0].amount <= 0:
 			slots.erase(item_slots[0])
 			itemRemoved.emit(item)
-			print('slot removed!')
 		update.emit()
 		return
 	assert(false, "Item not found in inventory: %s" % item.name)
 		
 func add_slot():
-	print('extra inv slot added')
 	var new_slot = InvSlot.new()
 	slots.append(new_slot)

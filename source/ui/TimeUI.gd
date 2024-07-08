@@ -57,8 +57,8 @@ func set_time(day, hour, minute):
 	daysLabel.text = 'Day'+ str(day+1)
 	hoursLabel.text = str(hour) + ':' + str(minute)
 	
-func sleep_toggled(sleeping):
-	if sleeping:
+func sleep_toggled(pet_state):
+	if pet_state == Pet.PetState.SLEEPING:
 		INGAME_SPEED = INGAME_SPEED * 2
 	else:
 		INGAME_SPEED = INGAME_SPEED / 2
