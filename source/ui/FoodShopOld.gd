@@ -1,11 +1,11 @@
 extends Control
 
 @onready var inv: Inventory = preload("res://source/inventory/food_store_inv.tres")
-@onready var slots: Array = $NinePatchRect/GridContainer.get_children()
+@onready var slots: Array = $GridContainer.get_children()
 @onready var selected_item: Item
-@onready var selected_item_sprite = $NinePatchRect/SelectedItemSprite
-@onready var selected_item_label = $NinePatchRect/SelectedItemLabel
-@onready var item_price_label = $NinePatchRect/ItemPrice
+@onready var selected_item_sprite = $SelectedItemSprite
+@onready var selected_item_label = $SelectedItemLabel
+@onready var item_price_label = $ItemPrice
 
 func _ready():
 	selected_item = preload("res://source/inventory/items/foods/banana.tres")

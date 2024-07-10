@@ -48,8 +48,8 @@ func set_pet_exit_time():
 	var stay_duration_days = int(stay_duration_hours / HOURS_PER_DAY)
 	var hours = stay_duration_hours % HOURS_PER_DAY
 	pet_exit_time.day = timeUI.day + stay_duration_days
-	pet_exit_time.hour = timeUI.hour + hours - hours 
-	pet_exit_time.minute = timeUI.minute + 8
+	pet_exit_time.hour = timeUI.hour + hours - hours
+	pet_exit_time.minute = timeUI.minute + 3
 	
 func introduce_guest_pet():
 	current_guest_pet_resource = guest_pet_resources[randi() % guest_pet_resources.size()]
@@ -61,6 +61,7 @@ func introduce_guest_pet():
 	set_pet_exit_time()
 	print('exit time:', pet_exit_time)
 	pet_introduced = true
+	Global.add_visitor_to_array(_pet.resource.get_animal_type_name())
 
 func show_pet_intro(pet_data):
 	var pet_details = {
@@ -75,7 +76,27 @@ func show_pet_intro(pet_data):
 	await pet_introduction_ui.ready
 	pet_introduction_ui.set_pet_info(pet_details)
 
-func show_pet_outro(pet_data, average_stats, review, star_rating, coin_amount):
+func show_pet_outro(pet_details):
+	pet_outro_ui = petOutroUI.instantiate()
+	get_parent().add_child(pet_outro_ui)
+	pet_outro_ui.set_pet_info(pet_details)
+	await pet_outro_ui.tree_exited
+	
+func _stay_over():
+	pet_introduced = false
+	
+	var average_stats = _pet.pet_stats.get_overall_average_stats()
+	var star_rating = get_star_rating(average_stats)
+	var review = evaluate_care(star_rating)
+	var coin_amount = calculate_coins_reward(star_rating)
+	var pet_stay_details = get_pet_stay_details(current_guest_pet_resource, average_stats, review, star_rating, coin_amount)
+	Global.reviewsInfo.append(pet_stay_details)
+	await show_pet_outro(pet_stay_details)
+	_pet.walk_out_of_scene()
+	await get_tree().create_timer(1).timeout
+	introduce_guest_pet()
+
+func get_pet_stay_details(pet_data, average_stats, review, star_rating, coin_amount):
 	var pet_details = {
 		"image": pet_data.texture,
 		"name": pet_data.name,
@@ -87,24 +108,8 @@ func show_pet_outro(pet_data, average_stats, review, star_rating, coin_amount):
 		"star_rating": star_rating,
 		"coins": coin_amount
 	}
-	pet_outro_ui = petOutroUI.instantiate()
-	get_parent().add_child(pet_outro_ui)
-	pet_outro_ui.set_pet_info(pet_details)
-	await pet_outro_ui.tree_exited
+	return pet_details
 	
-func _stay_over():
-	pet_introduced = false
-	
-		
-	var average_stats = _pet.pet_stats.get_overall_average_stats()
-	var star_rating = get_star_rating(average_stats)
-	var review = evaluate_care(star_rating)
-	var coin_amount = calculate_coins_reward(star_rating)
-	await show_pet_outro(current_guest_pet_resource, average_stats, review, star_rating, coin_amount)
-	_pet.walk_out_of_scene()
-	await get_tree().create_timer(1).timeout
-	introduce_guest_pet()
-		
 func evaluate_care(rating: int) -> String:
 	var all_rating_reviews = reviews_data[str(rating)]
 	return all_rating_reviews[randi() % all_rating_reviews.size()]

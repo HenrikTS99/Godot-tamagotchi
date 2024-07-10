@@ -6,7 +6,6 @@ extends Control
 @onready var petImage = get_node("%PetImage")
 @onready var statsLabel = get_node("%StatsLabel")
 @onready var reviewLabel = get_node("%ReviewLabel")
-@onready var starRatingImage = get_node("%StarRatingImage")
 @onready var coinsLabel = get_node("%CoinsLabel")
 @onready var claimButton = get_node("%ClaimButton")
 @onready var stars = get_node("%StarsContainer").get_children()

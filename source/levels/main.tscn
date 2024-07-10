@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c6felwgxjmv8b"]
+[gd_scene load_steps=17 format=3 uid="uid://c6felwgxjmv8b"]
 
 [ext_resource type="Texture2D" uid="uid://b8hgdxdb8txpv" path="res://assets/img/green.webp" id="1_cx66j"]
 [ext_resource type="Texture2D" uid="uid://cid26mv4qe07s" path="res://assets/img/Terrain (16x16).png" id="3_xgax1"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://bdgkv6y4ook44" path="res://source/ui/coin_display.tscn" id="7_lrs1y"]
 [ext_resource type="Script" path="res://source/scripts/DebugInterface.gd" id="8_5nyvm"]
 [ext_resource type="Script" path="res://source/levels/PetXpLabel.gd" id="8_rpysu"]
-[ext_resource type="PackedScene" uid="uid://cqp4177jiyqs4" path="res://source/ui/shop.tscn" id="10_g4wbb"]
 [ext_resource type="PackedScene" uid="uid://bgmol5skpa86r" path="res://source/ui/inv_ui.tscn" id="11_uxhrn"]
 [ext_resource type="Script" path="res://source/scripts/GuestPetManager.gd" id="12_fmnag"]
 [ext_resource type="Resource" uid="uid://m1hfx8b3e4ks" path="res://source/actors/Pets/CapybaraResource.tres" id="13_kulsl"]
@@ -495,9 +494,14 @@ visible = false
 color = Color(0.288324, 0.455103, 0.688056, 1)
 
 [node name="TimeUI" parent="." instance=ExtResource("6_1xm53")]
+visible = false
+offset_left = 18.0
+offset_top = -13.0
+offset_right = 18.0
+offset_bottom = -13.0
 
 [node name="CoinDisplay" parent="." instance=ExtResource("7_lrs1y")]
-position = Vector2(335, 59)
+position = Vector2(456, 106)
 
 [node name="DebugInterface" type="Control" parent="."]
 layout_mode = 3
@@ -513,8 +517,6 @@ offset_top = 157.0
 offset_right = 362.0
 offset_bottom = 180.0
 script = ExtResource("8_rpysu")
-
-[node name="Shop" parent="." instance=ExtResource("10_g4wbb")]
 
 [node name="InvUI" parent="." instance=ExtResource("11_uxhrn")]
 visible = false

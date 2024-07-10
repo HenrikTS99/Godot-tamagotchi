@@ -1,6 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dqlrf8c1udujk"]
+[gd_scene load_steps=10 format=3 uid="uid://dqlrf8c1udujk"]
 
 [ext_resource type="Script" path="res://source/ui/UpdateBars.gd" id="1_e4vm8"]
+[ext_resource type="Texture2D" uid="uid://qyblfl5s1o6q" path="res://assets/img/UI/funbar.png" id="2_4fdmr"]
+[ext_resource type="Texture2D" uid="uid://duewb4ci27403" path="res://assets/img/UI/progressbar.png" id="3_li5nv"]
+[ext_resource type="Texture2D" uid="uid://vspjpgorrr3n" path="res://assets/img/UI/hungerbar.png" id="4_0gvsg"]
+[ext_resource type="Texture2D" uid="uid://di341cqi02wcq" path="res://assets/img/UI/hygienebar.png" id="5_l0dd4"]
+[ext_resource type="Texture2D" uid="uid://cwlvy47us85eb" path="res://assets/img/UI/sleepbar.png" id="6_0eg3n"]
+[ext_resource type="Texture2D" uid="uid://ceh83jg66cgtq" path="res://assets/img/UI/socialbar.png" id="7_yksa8"]
+[ext_resource type="Texture2D" uid="uid://cnx55ln77j01u" path="res://assets/img/UI/lovebar.png" id="8_t47px"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b5pjt"]
 bg_color = Color(0.409907, 0.672257, 0.453668, 1)
@@ -20,6 +27,7 @@ mouse_filter = 2
 script = ExtResource("1_e4vm8")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,7 +43,6 @@ layout_mode = 2
 text = "Happiness"
 
 [node name="HappinessBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_vertical = 1
@@ -51,7 +58,6 @@ layout_mode = 2
 text = "Hunger"
 
 [node name="HungerBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer2"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 step = 1.0
@@ -64,7 +70,6 @@ layout_mode = 2
 text = "Hygiene"
 
 [node name="HygieneBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer3"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 step = 1.0
@@ -77,7 +82,6 @@ layout_mode = 2
 text = "Fun"
 
 [node name="FunBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer4"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 step = 1.0
@@ -91,7 +95,6 @@ text = "Social
 "
 
 [node name="SocialBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer5"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 step = 1.0
@@ -104,24 +107,148 @@ layout_mode = 2
 text = "Tiredness"
 
 [node name="TirednessBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer6"]
-unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 step = 1.0
 
 [node name="Debug" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 319.0
+offset_left = 12.0
 offset_top = 105.0
-offset_right = 410.0
-offset_bottom = 196.0
+offset_right = 498.0
+offset_bottom = 209.0
 
-[node name="StatsTotal" type="Label" parent="Debug"]
+[node name="Control" type="Control" parent="Debug"]
+layout_mode = 2
+
+[node name="StatsAverage" type="Label" parent="Debug/Control"]
 unique_name_in_owner = true
 layout_mode = 2
+offset_left = 218.0
+offset_top = 26.0
+offset_right = 261.0
+offset_bottom = 49.0
 text = "test"
 
-[node name="StatsAverage" type="Label" parent="Debug"]
+[node name="StatsTotal" type="Label" parent="Debug/Control"]
 unique_name_in_owner = true
 layout_mode = 2
+offset_left = 217.0
+offset_top = 8.0
+offset_right = 260.0
+offset_bottom = 31.0
 text = "test"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Debug/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BarLabelHappiness" type="Label" parent="Debug/Control/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Stats:"
+
+[node name="BarLabelHunger" type="Label" parent="Debug/Control/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Stats:"
+
+[node name="BarLabelHygiene" type="Label" parent="Debug/Control/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Stats:"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Debug/Control"]
+layout_mode = 0
+offset_left = 353.0
+offset_top = -12.0
+offset_right = 396.0
+offset_bottom = 66.0
+
+[node name="BarLabelFun" type="Label" parent="Debug/Control/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Stats:"
+horizontal_alignment = 2
+
+[node name="BarLabelSocial" type="Label" parent="Debug/Control/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Stats:"
+horizontal_alignment = 2
+
+[node name="BarLabelTiredness" type="Label" parent="Debug/Control/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Stats:"
+horizontal_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_top = 5.0
+offset_right = 391.0
+offset_bottom = 79.0
+scale = Vector2(1.3, 1.3)
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="HappinessBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 10.0
+value = 100.0
+texture_under = ExtResource("8_t47px")
+texture_progress = ExtResource("3_li5nv")
+texture_progress_offset = Vector2(22, 5)
+
+[node name="HungerBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 10.0
+value = 60.0
+texture_under = ExtResource("4_0gvsg")
+texture_progress = ExtResource("3_li5nv")
+texture_progress_offset = Vector2(22, 5)
+
+[node name="HygieneBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 10.0
+value = 50.0
+texture_under = ExtResource("5_l0dd4")
+texture_progress = ExtResource("3_li5nv")
+texture_progress_offset = Vector2(22, 5)
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="FunBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 10.0
+value = 50.0
+texture_under = ExtResource("2_4fdmr")
+texture_progress = ExtResource("3_li5nv")
+texture_progress_offset = Vector2(22, 5)
+
+[node name="SocialBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 10.0
+value = 50.0
+texture_under = ExtResource("7_yksa8")
+texture_progress = ExtResource("3_li5nv")
+texture_progress_offset = Vector2(22, 5)
+
+[node name="TirednessBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 10.0
+value = 50.0
+texture_under = ExtResource("6_0eg3n")
+texture_progress = ExtResource("3_li5nv")
+texture_progress_offset = Vector2(22, 5)

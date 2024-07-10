@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://r1srkhptyee1"]
+[gd_scene load_steps=10 format=3 uid="uid://r1srkhptyee1"]
 
 [ext_resource type="Script" path="res://source/actors/pet/pet.gd" id="1_mp1so"]
 [ext_resource type="Texture2D" uid="uid://byedsvlx673ru" path="res://assets/img/Pets/monki.png" id="2_qxnnt"]
 [ext_resource type="Script" path="res://source/actors/ShakeTween.gd" id="3_00fq3"]
 [ext_resource type="Script" path="res://source/actors/pet/PetStats.gd" id="4_mmn7c"]
+[ext_resource type="FontFile" uid="uid://bto7agdrkocgn" path="res://assets/fonts/PixeloidSans.ttf" id="5_q3mnx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tkmqf"]
 size = Vector2(94, 96)
@@ -85,4 +86,5 @@ offset_left = -40.0
 offset_top = -91.0
 offset_right = 40.0
 offset_bottom = -68.0
+theme_override_fonts/font = ExtResource("5_q3mnx")
 text = "Pet Debug"

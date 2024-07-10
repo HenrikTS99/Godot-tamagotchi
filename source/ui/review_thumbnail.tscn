@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=3 uid="uid://da1yvwt5st80o"]
+
+[ext_resource type="Script" path="res://source/ui/review_thumbnail.gd" id="1_g4ltw"]
+[ext_resource type="Texture2D" uid="uid://r05oud0to665" path="res://assets/img/inventory-background.png" id="1_ktqi6"]
+[ext_resource type="Texture2D" uid="uid://bhfjprgp4pnof" path="res://assets/img/Pets/capybara.png" id="2_78yh7"]
+[ext_resource type="Texture2D" uid="uid://d2i8wlqqqv23s" path="res://assets/img/coin.png" id="3_1ca1n"]
+
+[node name="ReviewThumbnail" type="Panel"]
+custom_minimum_size = Vector2(300, 64)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -191.0
+offset_bottom = -448.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_g4ltw")
+metadata/_edit_use_anchors_ = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ktqi6")
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="PetImage" type="TextureRect" parent="NinePatchRect/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("2_78yh7")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="StarsContainer" type="HBoxContainer" parent="NinePatchRect/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="StarRatingImage" type="TextureRect" parent="NinePatchRect/HBoxContainer/StarsContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("3_1ca1n")
+
+[node name="StarRatingImage2" type="TextureRect" parent="NinePatchRect/HBoxContainer/StarsContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("3_1ca1n")
+stretch_mode = 1
+
+[node name="StarRatingImage3" type="TextureRect" parent="NinePatchRect/HBoxContainer/StarsContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("3_1ca1n")
+stretch_mode = 1
+
+[node name="StarRatingImage4" type="TextureRect" parent="NinePatchRect/HBoxContainer/StarsContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("3_1ca1n")
+stretch_mode = 1
+
+[node name="StarRatingImage5" type="TextureRect" parent="NinePatchRect/HBoxContainer/StarsContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("3_1ca1n")
+stretch_mode = 1

@@ -8,8 +8,16 @@ extends Control
 @onready var socialBar = get_node("%SocialBar")
 @onready var tirednessBar = get_node("%TirednessBar")
 
+# Debug
 @onready var statsTotalLabel = get_node("%StatsTotal")
 @onready var statsAverageLabel = get_node("%StatsAverage")
+
+@onready var labelHappiness = get_node("%BarLabelHappiness")
+@onready var labelHunger = get_node("%BarLabelHunger")
+@onready var labelHygiene = get_node("%BarLabelHygiene")
+@onready var labelFun = get_node("%BarLabelFun")
+@onready var labelSocial = get_node("%BarLabelSocial")
+@onready var labelTiredness = get_node("%BarLabelTiredness")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if pet:
@@ -31,22 +39,28 @@ func update():
 	update_tiredness(pet.pet_stats.tiredness)
 	
 func update_hunger(value):
-	hungerBar.value = value
+	hungerBar.value = max(10, value)
+	labelHunger.text = str(value) + '%'
 	
 func update_happiness(value):
-	happinessBar.value = value
+	happinessBar.value = max(10, value)
+	labelHappiness.text = str(value) + '%'
 	
 func update_hygiene(value):
-	hygieneBar.value = value
+	hygieneBar.value = max(10, value)
+	labelHygiene.text = str(value) + '%'
 	
 func update_fun(value):
-	funBar.value = value
-
+	funBar.value = max(10, value)
+	labelFun.text = str(value) + '%'
+	
 func update_social(value):
-	socialBar.value = value
+	socialBar.value = max(10, value)
+	labelSocial.text = str(value) + '%'
 	
 func update_tiredness(value):
-	tirednessBar.value = value
+	tirednessBar.value = max(10, value)
+	labelTiredness.text = str(value) + '%'
 	
 func update_stats_total(value):
 	statsTotalLabel.text = 'total:' + str(value)
