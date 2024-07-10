@@ -11,10 +11,10 @@ extends Control
 func _ready():
 	selected_item = preload("res://source/inventory/items/foods/banana.tres")
 	inv.update.connect(update_slots)
-	connect_slots_signals(slots)
+	connect_slots_signals()
 	update_slots()
 
-func connect_slots_signals(slots):
+func connect_slots_signals():
 	for slot in slots:
 		slot.itemPressed.connect(item_selected)
 		

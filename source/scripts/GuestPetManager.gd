@@ -48,8 +48,8 @@ func set_pet_exit_time():
 	var stay_duration_days = int(stay_duration_hours / HOURS_PER_DAY)
 	var hours = stay_duration_hours % HOURS_PER_DAY
 	pet_exit_time.day = timeUI.day + stay_duration_days
-	pet_exit_time.hour = timeUI.hour + hours - hours
-	pet_exit_time.minute = timeUI.minute + 3
+	pet_exit_time.hour = timeUI.hour + hours
+	pet_exit_time.minute = timeUI.minute
 	
 func introduce_guest_pet():
 	current_guest_pet_resource = guest_pet_resources[randi() % guest_pet_resources.size()]

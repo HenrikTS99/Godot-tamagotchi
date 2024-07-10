@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://r05oud0to665" path="res://assets/img/inventory-background.png" id="2_kxm5m"]
 
 [node name="InvUI" type="Control" groups=["InventoryUI"]]
+top_level = true
+z_index = 2
 custom_minimum_size = Vector2(87, 65)
 layout_mode = 3
 anchors_preset = 8

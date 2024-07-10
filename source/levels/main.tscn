@@ -526,3 +526,4 @@ script = ExtResource("12_fmnag")
 guest_pet_resources = Array[Resource("res://source/actors/pet/petResourceBase.gd")]([ExtResource("13_kulsl"), ExtResource("14_m5qdt")])
 
 [node name="Computer" parent="." instance=ExtResource("15_f5fyu")]
+visible = false
