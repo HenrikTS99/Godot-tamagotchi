@@ -26,7 +26,6 @@ class_name Pet
 signal xpGained(experience_level, experience, experience_required)
 signal sleepingToggled(sleeping)
 signal itemConsumed(item)
-signal walking_finished
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -295,9 +294,6 @@ func walk_into_scene():
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "global_position", CENTER_POS, 1)
 	await tween.finished
-	print('walk in finished')
-	print(position)
-	emit_signal("walking_finished")
 	state = PetState.IDLE
 	
 func walk_out_of_scene():
