@@ -5,7 +5,7 @@ extends Node
 
 signal coinsChanged(value)
 
-var coins: int = 5:
+var coins: int = 35:
 	set(new_value):
 		if (coins > new_value):
 			totalCoinsSpent += coins - new_value

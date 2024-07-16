@@ -7,7 +7,9 @@ extends Node
 @onready var petOutroUI = preload("res://source/ui/pet_outro_ui.tscn")
 @onready var reviews_json_path = "res://source/data/reviews.json"
 @onready var timeUI = get_tree().get_first_node_in_group("TimeUI")
-@onready var _pet = get_tree().get_first_node_in_group("Pet")
+@onready var _pet = get_parent().get_node("Pet")
+@onready var roomManager = get_tree().get_root().get_node("MainScene/RoomManager")
+@onready var roomScene = get_parent()
 
 var current_guest_pet_resource = null
 var pet_introduction_ui = null
@@ -52,18 +54,26 @@ func set_pet_exit_time():
 	pet_exit_time.minute = timeUI.minute
 	
 func introduce_guest_pet():
+	while roomManager.queue_processing:
+		await get_tree().create_timer(1).timeout
+	roomManager.queue_processing = true
 	current_guest_pet_resource = guest_pet_resources[randi() % guest_pet_resources.size()]
-	show_pet_intro(current_guest_pet_resource)
-	_pet.walk_into_scene()
-	_pet.resource = current_guest_pet_resource
-	_pet.reset_stats() 
+	# Stay duration
 	stay_duration_hours = randi_range(1, 1)
 	set_pet_exit_time()
 	print('exit time:', pet_exit_time)
+	
+	show_pet_intro(current_guest_pet_resource)
+	_pet.resource = current_guest_pet_resource
+	_pet.reset_stats()
+	await _pet.walk_into_scene()
+	
 	pet_introduced = true
+	roomManager.queue_processing = false
 	Global.add_visitor_to_array(_pet.resource.get_animal_type_name())
 
 func show_pet_intro(pet_data):
+	roomManager.switch_to_room(roomScene)
 	var pet_details = {
 		"image": pet_data.texture,
 		"name": pet_data.name,
@@ -72,17 +82,22 @@ func show_pet_intro(pet_data):
 		"hours": stay_duration_hours % HOURS_PER_DAY
 	}
 	pet_introduction_ui = petIntroductionUI.instantiate()
-	get_parent().add_child.call_deferred(pet_introduction_ui)
+	get_tree().get_root().add_child.call_deferred(pet_introduction_ui)
 	await pet_introduction_ui.ready
 	pet_introduction_ui.set_pet_info(pet_details)
 
 func show_pet_outro(pet_details):
+	roomManager.switch_to_room(roomScene)
 	pet_outro_ui = petOutroUI.instantiate()
-	get_parent().add_child(pet_outro_ui)
+	get_tree().get_root().add_child(pet_outro_ui)
 	pet_outro_ui.set_pet_info(pet_details)
 	await pet_outro_ui.tree_exited
 	
 func _stay_over():
+	while roomManager.queue_processing:
+		await get_tree().create_timer(1).timeout
+	roomManager.queue_processing = true
+	
 	pet_introduced = false
 	
 	var average_stats = _pet.pet_stats.get_overall_average_stats()
@@ -92,8 +107,8 @@ func _stay_over():
 	var pet_stay_details = get_pet_stay_details(current_guest_pet_resource, average_stats, review, star_rating, coin_amount)
 	Global.reviewsInfo.append(pet_stay_details)
 	await show_pet_outro(pet_stay_details)
-	_pet.walk_out_of_scene()
-	await get_tree().create_timer(1).timeout
+	await _pet.walk_out_of_scene()
+	roomManager.queue_processing = false
 	introduce_guest_pet()
 
 func get_pet_stay_details(pet_data, average_stats, review, star_rating, coin_amount):

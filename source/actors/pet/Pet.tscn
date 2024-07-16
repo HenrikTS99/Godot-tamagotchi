@@ -59,6 +59,7 @@ _data = {
 }
 
 [node name="Pet" type="CharacterBody2D" groups=["Pet"]]
+collision_layer = 0
 script = ExtResource("1_mp1so")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

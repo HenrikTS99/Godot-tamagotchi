@@ -1,6 +1,6 @@
 extends Control
 
-@onready var pet = get_tree().get_first_node_in_group("Pet")
+@onready var pet: Node = null
 
 signal selectedAction(action)
 signal selectedShop()
@@ -10,8 +10,16 @@ signal closeUI()
 
 
 func _ready():
-	connect("selectedAction", Callable(pet, "pet_action"))
+	var room_manager = get_parent().get_node("RoomManager")
+	room_manager.ActivePetChanged.connect(update_pet)
+	
 
+func update_pet(new_pet: Node):
+	if pet:
+		disconnect("selectedAction", Callable(pet, "pet_action"))
+	pet = new_pet
+	connect("selectedAction", Callable(pet, "pet_action"))
+	
 func _on_feed_button_pressed():
 	emit_signal("openInventory", Item.ItemType.Food)
 	emit_signal("selectedAction", "feed")
@@ -33,7 +41,6 @@ func _on_sleep_button_pressed():
 
 func _on_shop_button_pressed():
 	emit_signal("selectedShop")
-
 
 func _on_computer_button_pressed():
 	emit_signal("closeUI")

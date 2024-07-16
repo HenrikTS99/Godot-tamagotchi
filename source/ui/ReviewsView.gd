@@ -19,7 +19,6 @@ func update():
 		return
 	reviews = Global.reviewsInfo
 	check_for_new_reviews()
-	print('eyo')
 	noReviewsLabel.visible = reviews.size() == 0
 	
 func check_for_new_reviews():

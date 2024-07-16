@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://covnlf81o1vpb"]
+[gd_scene load_steps=27 format=3 uid="uid://covnlf81o1vpb"]
 
 [ext_resource type="Script" path="res://source/ui/computer.gd" id="1_0qtuq"]
 [ext_resource type="Texture2D" uid="uid://bgq2pwa0i3v3l" path="res://assets/img/UI/desktopbg.png" id="1_xk5u5"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://dm6jggkqy6kji" path="res://assets/img/UI/powerbutton.png" id="8_ac1i6"]
 [ext_resource type="Script" path="res://source/ui/FoodShop.gd" id="11_llelh"]
 [ext_resource type="PackedScene" uid="uid://ywfy0nxoj4an" path="res://source/inventory/item_ui_slot.tscn" id="13_ova5w"]
-[ext_resource type="Script" path="res://source/ui/RoomExpandShop.gd" id="14_ngfvj"]
 [ext_resource type="Texture2D" uid="uid://d2i8wlqqqv23s" path="res://assets/img/coin.png" id="14_w0mfg"]
 [ext_resource type="Script" path="res://source/ui/StatsView.gd" id="15_3ascn"]
 [ext_resource type="FontFile" uid="uid://denthodlb7iy2" path="res://assets/fonts/EnterCommand-Bold.ttf" id="15_vb7wd"]
@@ -393,7 +392,6 @@ libraries = {
 }
 
 [node name="RoomExpandShop" type="Control" parent="ComputerPanel"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -406,7 +404,7 @@ offset_right = 163.0
 offset_bottom = 97.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("14_ngfvj")
+script = ExtResource("11_llelh")
 
 [node name="ShopTexture" type="TextureRect" parent="ComputerPanel/RoomExpandShop"]
 layout_mode = 1
@@ -462,17 +460,6 @@ texture = ExtResource("14_w0mfg")
 [node name="Button" type="Button" parent="ComputerPanel/RoomExpandShop/VBoxContainer"]
 layout_mode = 2
 text = "Purchase"
-
-[node name="MaxRoomsLabel" type="Label" parent="ComputerPanel/RoomExpandShop"]
-visible = false
-layout_mode = 0
-offset_left = 4.0
-offset_top = 34.0
-offset_right = 323.0
-offset_bottom = 191.0
-text = "You already have max amount of rooms."
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="StatsView" type="Control" parent="ComputerPanel"]
 visible = false

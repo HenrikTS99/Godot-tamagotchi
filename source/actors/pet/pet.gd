@@ -26,6 +26,7 @@ class_name Pet
 signal xpGained(experience_level, experience, experience_required)
 signal sleepingToggled(sleeping)
 signal itemConsumed(item)
+signal walking_finished
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
@@ -135,7 +136,7 @@ func spawn_poop():
 	pet_stats.hygiene -= 10
 	poop_counter += 1
 	var poop = poopItem.instantiate()
-	get_tree().current_scene.add_child(poop)
+	get_parent().add_child(poop)
 	poop.poop_removed.connect(poop_removed)
 	poop.position = Vector2(global_position.x + randf_range(-200, 200), 355)
 
@@ -145,7 +146,7 @@ func poop_removed():
 	
 func reaction_popup(reaction):
 	var reaction_instance = reactionScene.instantiate()
-	get_tree().current_scene.add_child(reaction_instance)
+	get_parent().add_child(reaction_instance)
 	reaction_instance.position = Vector2(global_position.x + randf() * 20 , global_position.y - randf_range(50, 80))
 	reaction_instance.set_reaction(reaction)
 	
@@ -153,6 +154,9 @@ func pet_action(action):
 	if state == PetState.SLEEPING:
 		if action == "sleep":
 			toggle_sleep()
+		return
+	if state != PetState.IDLE:
+		print('pet not idle')
 		return
 	match action:
 		"feed":
@@ -205,7 +209,7 @@ func feed(food_item):
 func spawn_food(food_item):
 	var food = itemScene.instantiate()
 	food.item = food_item
-	get_tree().current_scene.add_child(food)
+	get_parent().add_child(food)
 	food.position = Vector2(global_position.x - 35, 340)
 	food.bobble_anim()
 	return food
@@ -285,11 +289,15 @@ func gain_xp_based_on_stats(average_stats):
 	gain_experience(average_stats/7 - 6)
 
 func walk_into_scene():
+	print('walking into scene...', self)
 	state = PetState.WALKING
 	global_position = Vector2(600, CENTER_POS.y)
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "global_position", CENTER_POS, 1)
 	await tween.finished
+	print('walk in finished')
+	print(position)
+	emit_signal("walking_finished")
 	state = PetState.IDLE
 	
 func walk_out_of_scene():

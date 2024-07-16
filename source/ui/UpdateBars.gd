@@ -1,6 +1,5 @@
 extends Control
 
-@onready var pet = get_tree().get_first_node_in_group("Pet")
 @onready var happinessBar = get_node("%HappinessBar")
 @onready var hungerBar = get_node("%HungerBar")
 @onready var hygieneBar = get_node("%HygieneBar")
@@ -18,18 +17,43 @@ extends Control
 @onready var labelFun = get_node("%BarLabelFun")
 @onready var labelSocial = get_node("%BarLabelSocial")
 @onready var labelTiredness = get_node("%BarLabelTiredness")
+
+var pet: Node = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var room_manager = get_parent().get_node("RoomManager")
+	room_manager.ActivePetChanged.connect(update_pet)
 	if pet:
-		pet.pet_stats.hungerChanged.connect(update_hunger)
-		pet.pet_stats.connect("happinessChanged", update_happiness)
-		pet.pet_stats.hygieneChanged.connect(update_hygiene)
-		pet.pet_stats.funChanged.connect(update_fun)
-		pet.pet_stats.socialChanged.connect(update_social)
-		pet.pet_stats.tirednessChanged.connect(update_tiredness)
-		pet.pet_stats.totalStatsChanged.connect(update_stats_total)
+		await pet.ready
+		connect_pet_signals()
 		update()
 
+
+func update_pet(new_pet: Node):
+	if pet:
+		disconnect_pet_signals()
+	pet = new_pet
+	connect_pet_signals()
+	update()
+
+func connect_pet_signals():
+	pet.pet_stats.hungerChanged.connect(update_hunger)
+	pet.pet_stats.happinessChanged.connect(update_happiness)
+	pet.pet_stats.hygieneChanged.connect(update_hygiene)
+	pet.pet_stats.funChanged.connect(update_fun)
+	pet.pet_stats.socialChanged.connect(update_social)
+	pet.pet_stats.tirednessChanged.connect(update_tiredness)
+	pet.pet_stats.totalStatsChanged.connect(update_stats_total)
+
+func disconnect_pet_signals():
+	pet.pet_stats.hungerChanged.disconnect(update_hunger)
+	pet.pet_stats.happinessChanged.disconnect(update_happiness)
+	pet.pet_stats.hygieneChanged.disconnect(update_hygiene)
+	pet.pet_stats.funChanged.disconnect(update_fun)
+	pet.pet_stats.socialChanged.disconnect(update_social)
+	pet.pet_stats.tirednessChanged.disconnect(update_tiredness)
+	pet.pet_stats.totalStatsChanged.disconnect(update_stats_total)
+	
 func update():
 	update_hunger(pet.pet_stats.hunger)
 	update_happiness(pet.pet_stats.happiness)
@@ -37,6 +61,7 @@ func update():
 	update_fun(pet.pet_stats.fun)
 	update_social(pet.pet_stats.social)
 	update_tiredness(pet.pet_stats.tiredness)
+	update_stats_total(pet.pet_stats.total_stats)
 	
 func update_hunger(value):
 	hungerBar.value = max(10, value)
@@ -68,3 +93,4 @@ func update_stats_total(value):
 	
 func update_stats_average(value):
 	statsAverageLabel.text = 'average:' + str(value / 6)
+

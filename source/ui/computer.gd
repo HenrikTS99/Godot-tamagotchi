@@ -8,6 +8,7 @@ extends CanvasLayer
 @onready var statsViewPage = $ComputerPanel/StatsView
 @onready var ReviewsViewPage = $ComputerPanel/ReviewsView
 @onready var backButton = $ComputerPanel/ComputerButtons/BackButton
+@onready var roomExpandPage = $ComputerPanel/RoomExpandShop
 var computer_active = false
 
 @onready var pages = [desktopPage, foodShopPage, statsViewPage, ReviewsViewPage]
@@ -51,7 +52,10 @@ func _on_stats_button_pressed():
 	switch_page(statsViewPage)
 	statsViewPage.update()
 
-
 func _on_reviews_button_pressed():
 	switch_page(ReviewsViewPage)
 	ReviewsViewPage.update()
+
+func _on_rooms_button_pressed():
+	switch_page(roomExpandPage)
+	roomExpandPage.update()
