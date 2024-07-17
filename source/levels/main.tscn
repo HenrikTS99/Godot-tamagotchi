@@ -463,7 +463,7 @@ texture = ExtResource("3_xgax1")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_5u2nf")
 
-[node name="Main" type="Node" groups=["Main"]]
+[node name="Main(OLD)" type="Node" groups=["Main"]]
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 1

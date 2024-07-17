@@ -2,7 +2,6 @@ extends Node
 
 @onready var inv: Inventory = preload("res://source/inventory/player_inv.tres")
 
-
 signal coinsChanged(value)
 
 var coins: int = 35:

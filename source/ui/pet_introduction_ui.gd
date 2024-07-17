@@ -5,8 +5,6 @@ extends Control
 @onready var stayLabel = get_node("%StayLabel")
 @onready var petImage = get_node("%PetImage")
 
-func _ready():
-	pass
 	
 func set_pet_info(pet_details):
 	nameLabel.text = 'Name: ' + pet_details['name']

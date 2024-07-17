@@ -16,8 +16,7 @@ var unfilledColor = Color(0.3, 0.3, 0.3)
 var coins_amount: int
 var SPAWN_OFFSET = 10
 var coin_delay = 0.3
-func _ready():
-	pass
+
 	
 func set_pet_info(pet_details):
 	coins_amount = pet_details['coins']
@@ -38,7 +37,7 @@ func set_star_rating(rating: int):
 		if i >= rating:
 			star.modulate = unfilledColor
 
-func instance_coin(i):
+func instance_coin():
 	var coin = coinScene.instantiate()
 	var button_size = claimButton.size
 	coin.global_position = Vector2(claimButton.global_position.x, claimButton.global_position.y) + button_size/2 + Vector2(randi_range(-SPAWN_OFFSET, SPAWN_OFFSET), randi_range(-SPAWN_OFFSET,SPAWN_OFFSET))
@@ -47,7 +46,7 @@ func instance_coin(i):
 
 func animation_tween(coins, final_pos):
 	for i in range(coins):
-		var coin = instance_coin(i)
+		var coin = instance_coin()
 		var tween = get_tree().create_tween()
 		tween.tween_property(coin, "global_position", final_pos, 0.8).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 		tween.finished.connect(_coin_tween_finished)

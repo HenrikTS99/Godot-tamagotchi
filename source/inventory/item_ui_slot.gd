@@ -5,7 +5,6 @@ extends Panel
 
 var item: Item
 
-
 signal itemPressed()
 
 func update(slot: InvSlot):
@@ -21,7 +20,6 @@ func update(slot: InvSlot):
 			amount_label.visible = false
 		amount_label.text = str(slot.amount)
 		item = slot.item
-
 
 func _on_center_container_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:

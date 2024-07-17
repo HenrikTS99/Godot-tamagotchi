@@ -16,9 +16,9 @@ func _ready():
 
 func update_pet(new_pet: Node):
 	if pet:
-		disconnect("selectedAction", Callable(pet, "pet_action"))
+		disconnect("selectedAction", Callable(pet.pet_actions, "pet_action"))
 	pet = new_pet
-	connect("selectedAction", Callable(pet, "pet_action"))
+	connect("selectedAction", Callable(pet.pet_actions, "pet_action"))
 	
 func _on_feed_button_pressed():
 	emit_signal("openInventory", Item.ItemType.Food)

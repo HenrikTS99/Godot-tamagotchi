@@ -21,7 +21,7 @@ func _ready():
 func setup_signals():
 	buttons_ui.openInventory.connect(open_inventory)
 	buttons_ui.closeUI.connect(close_inventory)
-	pet.itemConsumed.connect(_on_item_consumed)
+	pet.pet_actions.itemConsumed.connect(_on_item_consumed)
 	inv.itemRemoved.connect(remove_item_ui_slot)
 
 # Inventory Managment

@@ -18,7 +18,6 @@ var HOURS_PER_DAY = 24
 var pet_exit_time = { "day": 0, "hour": 0, "minute": 0 }
 var pet_introduced = false
 var reviews_data: Dictionary = {}
-var file_path: String
 
 func _ready():
 	await get_tree().create_timer(1).timeout
@@ -59,13 +58,13 @@ func introduce_guest_pet():
 	roomManager.queue_processing = true
 	current_guest_pet_resource = guest_pet_resources[randi() % guest_pet_resources.size()]
 	# Stay duration
-	stay_duration_hours = randi_range(1, 1)
+	stay_duration_hours = randi_range(1, 12)
 	set_pet_exit_time()
 	print('exit time:', pet_exit_time)
 	
 	show_pet_intro(current_guest_pet_resource)
 	_pet.resource = current_guest_pet_resource
-	_pet.reset_stats()
+	_pet.pet_stats.reset_stats()
 	await _pet.walk_into_scene()
 	
 	pet_introduced = true
@@ -98,20 +97,22 @@ func _stay_over():
 		await get_tree().create_timer(1).timeout
 	roomManager.queue_processing = true
 	
-	pet_introduced = false
+	# Get stay stats and info
+	var pet_stay_details = get_pet_stay_details(current_guest_pet_resource)
 	
+	Global.reviewsInfo.append(pet_stay_details)
+	await show_pet_outro(pet_stay_details)
+	await _pet.walk_out_of_scene()
+	pet_introduced = false
+	roomManager.queue_processing = false
+	introduce_guest_pet()
+
+func get_pet_stay_details(pet_data):
 	var average_stats = _pet.pet_stats.get_overall_average_stats()
 	var star_rating = get_star_rating(average_stats)
 	var review = evaluate_care(star_rating)
 	var coin_amount = calculate_coins_reward(star_rating)
-	var pet_stay_details = get_pet_stay_details(current_guest_pet_resource, average_stats, review, star_rating, coin_amount)
-	Global.reviewsInfo.append(pet_stay_details)
-	await show_pet_outro(pet_stay_details)
-	await _pet.walk_out_of_scene()
-	roomManager.queue_processing = false
-	introduce_guest_pet()
-
-func get_pet_stay_details(pet_data, average_stats, review, star_rating, coin_amount):
+	
 	var pet_details = {
 		"image": pet_data.texture,
 		"name": pet_data.name,

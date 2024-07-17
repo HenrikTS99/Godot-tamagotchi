@@ -2,7 +2,7 @@ extends Node
 
 class_name PetStats
 
-@onready var pet = get_tree().get_first_node_in_group("Pet")
+@onready var pet = get_parent()
 
 signal hungerChanged(value)
 signal happinessChanged(value)
@@ -30,7 +30,7 @@ var stats = ['happiness', 'hunger', 'hygiene', 'fun', 'social', 'tiredness']
 		
 @export var hygiene: int = 80:
 	set(new_value):
-		hygiene = clamp(new_value, 0, (MAX_STAT - min((pet.poop_counter * 10), MAX_STAT))) # Clamp hygiene from 0 to 100, but if there is poop, dont go higher than max  * poops * 10, also make sure it cant go below 0.
+		hygiene = clamp(new_value, 0, (MAX_STAT - min((pet.pet_actions.poop_counter * 10), MAX_STAT))) # Clamp hygiene from 0 to 100, but if there is poop, dont go higher than max  * poops * 10, also make sure it cant go below 0.
 		update_total_stats()
 		emit_signal('hygieneChanged', hygiene)
 		
@@ -72,6 +72,10 @@ func get_overall_average_stats() -> float:
 	if update_stats_count == 0:
 		return 0
 	return cumulative_avg_stats / update_stats_count
+
+func reset_stats():
+	reset_average_stat_tracking()
+	reset_and_randomize_stats()
 	
 func reset_average_stat_tracking():
 	cumulative_avg_stats = 0.0

@@ -17,8 +17,11 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-DialogManager="*res://source/singletons/DialogManager.gd"
 Global="*res://source/singletons/Global.gd"
+
+[debug]
+
+gdscript/warnings/integer_division=0
 
 [display]
 

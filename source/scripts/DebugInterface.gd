@@ -2,6 +2,7 @@ extends Control
 
 @onready var _petXpLabel = $PetXpLabel
 @onready var _pet = get_tree().get_first_node_in_group("Pet")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if _pet:

@@ -26,14 +26,11 @@ var past_minute = -1.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	time = INGAME_TO_REAL_MINUTE_DURATION * INITIAL_HOUR * MINUTES_PER_HOUR
-	pet.sleepingToggled.connect(sleep_toggled)
-
-
+	pet.pet_actions.sleepingToggled.connect(sleep_toggled)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	time += delta * INGAME_TO_REAL_MINUTE_DURATION * INGAME_SPEED
-	
 	recalculate_time()
 
 func recalculate_time():
@@ -46,14 +43,14 @@ func recalculate_time():
 	if minute != past_minute:
 		past_minute = minute
 		time_tick.emit(day, hour, minute)
-		set_time(day, hour, minute)
+		set_time()
 		rotate_daytime_sprite(current_day_minutes)
 
 func rotate_daytime_sprite(current_day_minutes):
 	if current_day_minutes != 0:
 		sprite.rotation_degrees = ((current_day_minutes / 360.0) * 90) + 160 # Temp # Set the rotation of the daytime sprite to the current minute, one day is one full rotation.
 	
-func set_time(day, hour, minute):
+func set_time():
 	daysLabel.text = 'Day'+ str(day+1)
 	hoursLabel.text = str(hour) + ':' + str(minute)
 	
