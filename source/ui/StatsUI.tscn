@@ -112,6 +112,7 @@ layout_mode = 2
 step = 1.0
 
 [node name="Debug" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 12.0
 offset_top = 105.0

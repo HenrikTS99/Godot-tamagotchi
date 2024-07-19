@@ -35,6 +35,36 @@ func _physics_process(_delta):
 	# Debug state
 	petDebugLabel.text = PetState.keys()[state]
 
+func get_pet_save_data():
+	var my_data = SavedPet.new()
+	my_data.pet_resource =  resource
+	my_data.hunger = pet_stats.hunger
+	my_data.happiness = pet_stats.happiness
+	my_data.hygiene = pet_stats.hygiene
+	my_data.fun = pet_stats.fun
+	my_data.social = pet_stats.social
+	my_data.tiredness = pet_stats.tiredness
+	my_data.cumulative_avg_stats = pet_stats.cumulative_avg_stats
+	my_data.update_stats_count = pet_stats.update_stats_count
+	my_data.feed_counter = pet_actions.feed_counter
+	my_data.pet_counter = pet_actions.pet_counter
+	my_data.poop_counter = pet_actions.poop_counter
+	return my_data
+
+func update_to_save_data(saved_data:SavedData):
+	resource = saved_data.pet_resource
+	pet_stats.hunger = saved_data.hunger
+	pet_stats.happiness = saved_data.happiness
+	pet_stats.hygiene = saved_data.hygiene
+	pet_stats.fun = saved_data.fun
+	pet_stats.social = saved_data.social
+	pet_stats.tiredness = saved_data.tiredness
+	pet_stats.cumulative_avg_stats = saved_data.cumulative_avg_stats
+	pet_stats.update_stats_count = saved_data.update_stats_count
+	pet_actions.feed_counter = saved_data.feed_counter
+	pet_actions.pet_counter = saved_data.pet_counter
+	pet_actions.poop_counter = saved_data.poop_counter
+	
 func update_resource():
 	sprite.texture = resource.texture
 

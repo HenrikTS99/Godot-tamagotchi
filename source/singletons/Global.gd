@@ -4,7 +4,7 @@ extends Node
 
 signal coinsChanged(value)
 
-var coins: int = 35:
+var coins: int = 0:
 	set(new_value):
 		if (coins > new_value):
 			totalCoinsSpent += coins - new_value
@@ -26,8 +26,42 @@ var averageHappiness: int = 0
 var reviewsInfo: Array = []
 
 func _ready():
+	add_to_group("SaveGroup")
 	inv.update.connect(print_items)
 
+func on_save_game(saved_data:Array[SavedData]):
+	var my_data = SavedGlobal.new()
+	my_data.coins = coins
+	my_data.totalCoinsEarned = totalCoinsEarned
+	my_data.totalCoinsSpent = totalCoinsSpent
+	my_data.visitors = visitors
+	my_data.totalVisitors = totalVisitors
+	my_data.totalUniqueVisitors = totalUniqueVisitors
+	my_data.averageHappiness = averageHappiness
+	my_data.reviewsInfo = reviewsInfo
+	my_data.inv_slots = inv.slots
+	saved_data.append(my_data)
+
+func on_load_game(saved_data:SavedData):
+	coins = saved_data.coins
+	totalCoinsEarned = saved_data.totalCoinsEarned
+	totalCoinsSpent = saved_data.totalCoinsSpent
+	visitors = saved_data.visitors
+	totalVisitors = saved_data.totalVisitors
+	totalUniqueVisitors = saved_data.totalUniqueVisitors
+	averageHappiness = saved_data.averageHappiness
+	reviewsInfo = saved_data.reviewsInfo
+	update_inv_slots(saved_data.inv_slots)
+	
+func update_inv_slots(inv_slots: Array[InvSlot]):
+	# Update inv slots to saved inv slots
+	inv.slots = []
+	for slot in inv_slots:
+		var new_slot = InvSlot.new()
+		new_slot.item = slot.item
+		new_slot.amount = slot.amount
+		inv.slots.append(new_slot)
+		
 func collect(item):
 	print(item.name, 'added to inventory')
 	inv.insert(item)

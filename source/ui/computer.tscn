@@ -292,12 +292,14 @@ layout_mode = 2
 texture_normal = ExtResource("7_pj6x8")
 stretch_mode = 3
 
-[node name="RoomsButton" type="Button" parent="ComputerPanel/Desktop"]
+[node name="TempButtons" type="VBoxContainer" parent="ComputerPanel/Desktop"]
 layout_mode = 0
-offset_left = 72.3333
-offset_top = 15.6667
-offset_right = 133.333
-offset_bottom = 46.6667
+offset_left = 135.0
+offset_right = 196.0
+offset_bottom = 111.0
+
+[node name="RoomsButton" type="Button" parent="ComputerPanel/Desktop/TempButtons"]
+layout_mode = 2
 text = "Rooms"
 
 [node name="FoodShop" type="Control" parent="ComputerPanel"]
@@ -609,6 +611,6 @@ libraries = {
 [connection signal="pressed" from="ComputerPanel/Desktop/VBoxContainer/StatsButton" to="." method="_on_stats_button_pressed"]
 [connection signal="pressed" from="ComputerPanel/Desktop/VBoxContainer/ShopButton" to="." method="_on_shop_button_pressed"]
 [connection signal="pressed" from="ComputerPanel/Desktop/VBoxContainer2/ReviewsButton" to="." method="_on_reviews_button_pressed"]
-[connection signal="pressed" from="ComputerPanel/Desktop/RoomsButton" to="." method="_on_rooms_button_pressed"]
+[connection signal="pressed" from="ComputerPanel/Desktop/TempButtons/RoomsButton" to="." method="_on_rooms_button_pressed"]
 [connection signal="pressed" from="ComputerPanel/FoodShop/Button" to="ComputerPanel/FoodShop" method="_on_button_pressed"]
 [connection signal="pressed" from="ComputerPanel/RoomExpandShop/VBoxContainer/Button" to="ComputerPanel/RoomExpandShop" method="_on_button_pressed"]

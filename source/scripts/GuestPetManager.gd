@@ -27,8 +27,24 @@ func _ready():
 		return
 		
 	timeUI.time_tick.connect(check_if_stay_over)
-	introduce_guest_pet()
+	if !pet_introduced:
+		introduce_guest_pet()
 
+func get_pet_manager_save_data():
+	var my_data = SavedPetManager.new()
+	my_data.pet_resource = current_guest_pet_resource
+	my_data.pet_exit_time = pet_exit_time
+	my_data.stay_duration_hours = stay_duration_hours
+	my_data.pet_introduced = pet_introduced
+	return my_data
+
+func update_to_save_data(saved_data:SavedData):
+	current_guest_pet_resource = saved_data.pet_resource
+	pet_exit_time = saved_data.pet_exit_time
+	stay_duration_hours = saved_data.stay_duration_hours
+	pet_introduced = saved_data.pet_introduced
+	
+	
 func load_json_file(file_path: String):
 	if FileAccess.file_exists(file_path):
 		var data_file = FileAccess.open(file_path, FileAccess.READ)

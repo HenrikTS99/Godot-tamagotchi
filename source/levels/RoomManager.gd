@@ -21,6 +21,32 @@ func _ready():
 	if rooms.size() >= 1:
 		room_toggle_button.visible = false
 
+func on_save_game(saved_data:Array[SavedData]):
+	var my_data = SavedRoomInfo.new()
+	my_data.current_room_index = rooms.find(current_room)
+	my_data.total_rooms = rooms.size()
+	for room in rooms:
+		var pet_manager = room.get_node("GuestPetManager")
+		var pet = room.get_node("Pet")
+		my_data.pets_manager_info.append(pet_manager.get_pet_manager_save_data())
+		my_data.pets_info.append(pet.get_pet_save_data())
+	saved_data.append(my_data)
+
+func on_before_load_game():
+	pass
+
+func on_load_game(saved_data:SavedData):
+	while saved_data.total_rooms > rooms.size():
+		add_room()
+	
+	for i in range(saved_data.pets_info.size()):
+		var room = rooms[i]
+		var pet_manager = room.get_node("GuestPetManager")
+		var pet = room.get_node("Pet")
+		pet_manager.update_to_save_data(saved_data.pets_manager_info[i])
+		pet.update_to_save_data(saved_data.pets_info[i])
+		
+	
 func switch_to_room(room: Node):
 	if current_room:
 		current_room.visible = false

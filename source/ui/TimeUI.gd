@@ -33,6 +33,14 @@ func _process(delta):
 	time += delta * INGAME_TO_REAL_MINUTE_DURATION * INGAME_SPEED
 	recalculate_time()
 
+func on_save_game(saved_data:Array[SavedData]):
+	var my_data = SavedTime.new()
+	my_data.time = time
+	saved_data.append(my_data)
+
+func on_load_game(saved_data:SavedData):
+	time = saved_data.time
+		
 func recalculate_time():
 	var total_minutes = int(time / INGAME_TO_REAL_MINUTE_DURATION)
 	day = int(total_minutes / MINUTES_PER_DAY)

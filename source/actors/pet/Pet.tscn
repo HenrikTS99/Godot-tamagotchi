@@ -1,7 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://r1srkhptyee1"]
+[gd_scene load_steps=11 format=3 uid="uid://r1srkhptyee1"]
 
 [ext_resource type="Script" path="res://source/actors/pet/pet.gd" id="1_mp1so"]
-[ext_resource type="Texture2D" uid="uid://byedsvlx673ru" path="res://assets/img/Pets/monki.png" id="2_qxnnt"]
 [ext_resource type="Script" path="res://source/actors/ShakeTween.gd" id="3_00fq3"]
 [ext_resource type="Script" path="res://source/actors/pet/PetStats.gd" id="4_mmn7c"]
 [ext_resource type="Script" path="res://source/actors/pet/PetActions.gd" id="5_hjdxb"]
@@ -67,7 +66,6 @@ script = ExtResource("1_mp1so")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-0.999969, -2)
 scale = Vector2(2, 2)
-texture = ExtResource("2_qxnnt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, -2)

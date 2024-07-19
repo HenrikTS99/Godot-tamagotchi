@@ -24,8 +24,13 @@ func setup_signals():
 	pet.pet_actions.itemConsumed.connect(_on_item_consumed)
 	inv.itemRemoved.connect(remove_item_ui_slot)
 
+func update_loaded_in_inv():
+	inv = Global.inv
+	inv.itemRemoved.connect(remove_item_ui_slot)
 # Inventory Managment
 func update_inventory(item_type):
+	if Global.inv != inv:
+		update_loaded_in_inv()
 	var item_type_slots = get_item_type_slots(item_type)
 	check_for_new_slots(item_type_slots)
 	update_slots(item_type_slots)

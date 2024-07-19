@@ -20,14 +20,14 @@
 
 [node name="ButtonsUI" parent="." instance=ExtResource("2_jau2k")]
 
-[node name="TimeUI" parent="." groups=["SaveGroup"] instance=ExtResource("3_my7q0")]
+[node name="TimeUI" parent="." instance=ExtResource("3_my7q0")]
 offset_left = 18.0
 offset_top = -13.0
 offset_right = 18.0
 offset_bottom = -13.0
 
 [node name="CoinDisplay" parent="." instance=ExtResource("4_vilp1")]
-position = Vector2(456, 120)
+position = Vector2(456, 106)
 
 [node name="DebugInterface" type="Control" parent="."]
 visible = false
@@ -56,8 +56,19 @@ visible = false
 [node name="SceneSaver" type="Node" parent="."]
 script = ExtResource("11_ab7tw")
 
-[node name="Timer" type="Timer" parent="SceneSaver"]
-wait_time = 5.0
-autostart = true
+[node name="Button" type="Button" parent="SceneSaver"]
+offset_left = 455.0
+offset_top = 287.0
+offset_right = 498.0
+offset_bottom = 318.0
+text = "save"
 
-[connection signal="timeout" from="SceneSaver/Timer" to="SceneSaver" method="_on_timer_timeout"]
+[node name="Button2" type="Button" parent="SceneSaver"]
+offset_left = 455.0
+offset_top = 311.0
+offset_right = 498.0
+offset_bottom = 342.0
+text = "load"
+
+[connection signal="pressed" from="SceneSaver/Button" to="SceneSaver" method="_on_button_pressed"]
+[connection signal="pressed" from="SceneSaver/Button2" to="SceneSaver" method="_on_button_2_pressed"]
