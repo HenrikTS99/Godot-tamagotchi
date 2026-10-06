@@ -9,9 +9,11 @@ extends CanvasLayer
 @onready var ReviewsViewPage = $ComputerPanel/ReviewsView
 @onready var backButton = $ComputerPanel/ComputerButtons/BackButton
 @onready var roomExpandPage = $ComputerPanel/RoomExpandShop
+@onready var DiscoViewPage = $ComputerPanel/DiscoShop
+
 var computer_active = false
 
-@onready var pages = [desktopPage, foodShopPage, statsViewPage, ReviewsViewPage]
+@onready var pages = [desktopPage, foodShopPage, statsViewPage, ReviewsViewPage, DiscoViewPage]
 @onready var current_page: Control = desktopPage
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -60,3 +62,6 @@ func _on_rooms_button_pressed():
 	switch_page(roomExpandPage)
 	roomExpandPage.update()
 
+func _on_disco_button_pressed():
+	switch_page(DiscoViewPage)
+	DiscoViewPage.update()
